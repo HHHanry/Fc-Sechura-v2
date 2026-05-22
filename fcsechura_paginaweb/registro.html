@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>FC SECHURA</title>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="registro_styles.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+            <link rel="icon" href="img/logofc.png" type="image/png">
+
+    </head>
+    <body>
+        <header class="header_class">
+            <div class="navbar">
+                <a class="logo" href="index.html"><img src="img/logo.png" alt="logo_de_inicio"></a>
+                    <button class="hamburger-menu" aria-label="Menu"><i class="fa-solid fa-bars"></i> <i class="fa-solid fa-xmark"></i>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                <ul class="lista_nav">
+                    <li class="item_nav"><a href="informacion.html">Información</a></li>
+                    <li class="item_nav"><a href="CONTACTO.html">Contacto</a></li>
+                </ul>
+              
+            </div>
+             <div class="overlay"></div>
+        </header>
+       <!-- -->
+        <div class="header_container">
+        <h1>Registro de Alumnos</h1>
+    </div>
+
+    <main class="main">
+        <section class="registration">
+            <h2>Formulario de Registro</h2>
+            <form class="registration-form">
+                <div class="form-group">
+                    <label for="nombre">Nombre Completo:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+                    <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="edad">Edad:</label>
+                    <input type="number" id="edad" name="edad" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="colegio">Colegio:</label>
+                    <input type="text" id="colegio" name="colegio" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="distrito">Distrito:</label>
+                    <input type="text" id="distrito" name="distrito" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="ciudad">Ciudad:</label>
+                    <input type="text" id="ciudad" name="ciudad" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="condicion">Condición:</label>
+                    <input type="text" id="condicion" name="condicion">
+                </div>
+
+                <div class="form-group">
+                    <label for="religion">Religión:</label>
+                    <input type="text" id="religion" name="religion">
+                </div>
+
+                <div class="form-group">
+                    <label for="telefono">Teléfono:</label>
+                    <input type="tel" id="telefono" name="telefono">
+                </div>
+
+                <div class="form-group">
+                    <label for="direccion">Dirección:</label>
+                    <input type="text" id="direccion" name="direccion" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="dni">DNI:</label>
+                    <input type="text" id="dni" name="dni" required>
+                </div>
+
+                <button type="submit" class="btn-submit">Registrar</button>
+            </form>
+        </section>
+
+        <section class="carnet">
+            <h2>Carnet de Estudiante</h2>
+            <div class="carnet-preview">
+                <img src="img/logofc.png" alt="Logo" class="carnet-logo">
+                <h3 class="carnet-title">Nombre del Estudiante</h3>
+                <p class="carnet-info">DNI: XXXXXXXX</p>
+                <p class="carnet-info">Colegio: XXXXX</p>
+            </div>
+        </section>
+
+        <section class="pagos">
+            <h2>Registro de Pagos</h2>
+            <table class="payments-table">
+                <thead>
+                    <tr>
+                        <th>Concepto</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Pago de Matrícula</td>
+                        <td>Pendiente</td>
+                    </tr>
+                    <tr>
+                        <td>Uniforme</td>
+                        <td>Adquirido</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="asistencia">
+            <h2>Asistencia Diaria</h2>
+            <table class="attendance-table">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2025-01-01</td>
+                        <td>Presente</td>
+                    </tr>
+                    <tr>
+                        <td>2025-01-02</td>
+                        <td>Ausente</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+</body>
+</html>

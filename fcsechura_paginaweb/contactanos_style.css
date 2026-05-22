@@ -1,0 +1,112 @@
+  .contactanos_container {
+      display: flex;
+      flex-direction: column;
+    }
+    .contactanos_container img {
+      width: 100%;
+    }
+    .contactanos_medios__header {
+      margin: auto;
+      padding: 20px;
+    }
+    .contactanos_medios__header h1 {
+      font-family: Tahoma;
+      font-size: 26px;
+      color: #fff;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 1.0);
+      padding: 20px;
+      text-transform: uppercase;
+    }
+    .contactanos_medios__header p {
+      font-size: 14px;
+      padding: 5px;
+      color: #fff;
+    }
+    .contactanos_medios {
+      display: flex;
+      flex-direction: row;
+      text-align: center;
+      justify-content: center;
+      padding: 0;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .contactanos_cuadro {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+      border-radius: 10px;
+      padding: 20px;
+      width: 150px;
+      max-width: 150px;
+      height: auto;
+      margin: 10px;
+      color: #000;
+      box-shadow: 3px 2px 5px rgba(0, 0, 0, 0.7);
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+       background: linear-gradient(145deg, #fff, #fffecf);
+       text-decoration: none;
+    }
+    .contactanos_cuadro:hover{
+      box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.5);
+    }
+    .contactanos_cuadro	 h3{
+    	color: #1b345a;
+    }
+    .contactanos_cuadro i {
+      color: #1b345a;
+      margin: auto;
+      font-size: 70px;
+      padding: 10px;
+      text-align: center;
+    }
+    .contactanos_cuadro p {
+      color: #1b345a;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      font-size: 11px;
+    }
+    .correito {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .correito p {
+      font-size: 11px;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+    .contactanos_footer {
+      display: flex;
+      gap: 10px;
+      background-color: #1b345a;
+      margin: auto;
+      border-radius: 8px;
+      width: 80%;
+      padding: 14px;
+      margin: 30px auto 50px;
+      justify-content: center;
+      box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.7);
+      outline: solid 1px #1b345a;
+      text-align: center;
+      justify-content: center;
+    }
+    .contactanos_footer i {
+      font-size: 1rem;
+      color: #fff;
+      text-align: center;
+      justify-content: center;
+      margin: auto 0;
+    }
+    .contactanos_footer a {
+      font-family: Tahoma;
+      text-align: center;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+    }	

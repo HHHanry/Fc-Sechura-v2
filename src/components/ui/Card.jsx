@@ -1,0 +1,88 @@
+import React from 'react';
+
+/**
+ * Card — superficie base del Stadium Noir.
+ * Variantes:
+ *  - "surface"  (default): glass card sobre fondo oscuro.
+ *  - "elevated": modales, popovers (un nivel más arriba).
+ *  - "glow":     borde animado cian (para destacar).
+ *  - "tier":     fondo dorado tipo "tarjeta élite FIFA".
+ */
+export const Card = React.forwardRef(function Card(
+  { variant = 'surface', as: Tag = 'div', children, style, className = '', interactive = false, ...rest },
+  ref,
+) {
+  const base = {
+    borderRadius: 'var(--sn-radius-lg)',
+    color: 'var(--sn-text-primary)',
+    transition: 'transform var(--sn-dur-base) var(--sn-ease), box-shadow var(--sn-dur-base) var(--sn-ease), border-color var(--sn-dur-base) var(--sn-ease)',
+  };
+  const variants = {
+    surface: {
+      background: 'var(--sn-bg-surface)',
+      border: '1px solid var(--sn-border-faint)',
+      boxShadow: 'var(--sn-shadow-sm)',
+    },
+    elevated: {
+      background: 'var(--sn-bg-elevated)',
+      border: '1px solid var(--sn-border-soft)',
+      boxShadow: 'var(--sn-shadow-md)',
+    },
+    glow: {
+      background: 'var(--sn-bg-surface)',
+      border: '1px solid var(--sn-border-glow)',
+      boxShadow: 'var(--sn-shadow-glow)',
+    },
+    tier: {
+      background: 'linear-gradient(135deg, rgba(251,191,36,0.10) 0%, rgba(15,20,34,0.95) 60%)',
+      border: '1px solid rgba(251, 191, 36, 0.45)',
+      boxShadow: 'var(--sn-shadow-elite)',
+    },
+  };
+  const merged = { ...base, ...variants[variant], ...style };
+  return (
+    <Tag
+      ref={ref}
+      className={`${interactive ? 'sn-focusable' : ''} ${className}`}
+      style={merged}
+      onMouseEnter={interactive ? (e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.borderColor = 'var(--sn-border-glow)'; } : undefined}
+      onMouseLeave={interactive ? (e) => { e.currentTarget.style.transform = ''; e.currentTarget.style.borderColor = ''; } : undefined}
+      {...rest}
+    >
+      {children}
+    </Tag>
+  );
+});
+
+export const CardBody = ({ children, style, className = '', ...rest }) => (
+  <div className={className} style={{ padding: 'var(--sn-space-5)', ...style }} {...rest}>{children}</div>
+);
+
+export const CardHeader = ({ title, subtitle, action, style, className = '' }) => (
+  <div
+    className={className}
+    style={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: 'var(--sn-space-4)',
+      padding: 'var(--sn-space-5) var(--sn-space-5) var(--sn-space-3)',
+      borderBottom: '1px solid var(--sn-border-faint)',
+      ...style,
+    }}
+  >
+    <div>
+      {title && (
+        <h3 style={{ margin: 0, fontFamily: 'var(--sn-font-display)', fontSize: 'var(--sn-fs-md)', fontWeight: 700, color: 'var(--sn-text-primary)', letterSpacing: 'var(--sn-tracking-tight)' }}>
+          {title}
+        </h3>
+      )}
+      {subtitle && (
+        <p style={{ margin: '0.2rem 0 0', fontSize: 'var(--sn-fs-sm)', color: 'var(--sn-text-muted)' }}>
+          {subtitle}
+        </p>
+      )}
+    </div>
+    {action}
+  </div>
+);

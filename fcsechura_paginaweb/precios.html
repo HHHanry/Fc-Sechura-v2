@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Precios - FC SECHURA</title>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="precios_styles.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+            <link rel="icon" href="img/logofc.png" type="image/png">
+
+    </head>
+    <body>
+        <header class="header_class">
+            <div class="nav_top">
+                <div class="nav_top__container">
+                <h2>SIGUENOS EN: </h2>
+                <ul class="redes-sociales">
+                          <li class="red-social"><a href="https://web.facebook.com/profile.php?id=61551353857007" target="_blank"><i class="fa-brands fa-facebook"></i></a></li>
+                        <li class="red-social"><a href="https://wa.me/+51921933210" target="_blank"><i class="fa-brands fa-whatsapp"></i></a></li>
+                        <li class="red-social"><a href="https://www.instagram.com/fc_sechura2.1/" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="navbar">
+                <a class="logo" href="index.html"><img src="img/logo_portada.png" alt="logo_de_inicio"></a>
+                    <button class="hamburger-menu" aria-label="Menu"><i class="fa-solid fa-bars"></i> <i class="fa-solid fa-xmark"></i>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                <ul class="lista_nav">
+                    <li class="item_nav"><a href="informacion.html">Información</a></li>
+                    <li class="item_nav"><a href="precios.html">Precios</a></li>
+                    <li class="item_nav"><a href="contactanos.html">Contacto</a></li>
+                </ul>
+              
+            </div>
+             <div class="overlay"></div>
+        </header>
+            <section class="pricing">
+              <h2 class="pricing-title">Nuestros Planes</h2>
+              <div class="pricing-container">
+                  <div class="pricing-card basic" id="basic">
+                    <i class="fas fa-star"></i>
+                    <h3>Paquete Básico</h3>
+                    <p class="price">S/199.00</p>
+                    <p class="duration">1 MES</p>
+                    <div class="features">
+                      <ul>
+                        <li><i class="fa-solid fa-futbol"></i>Inscripción S/20</li>
+                        <li><i class="fa-solid fa-futbol"></i>Unirformes S/75</li>
+                        <li><i class="fa-solid fa-futbol"></i>Mensualidad por un mes S/110</li>
+                      </ul>
+                    </div>
+                    <button class="whatsapp-button" onclick="sendWhatsAppMessage('Precio Básico')">Me interesa</button>
+                  </div>
+
+                  <div class="pricing-card premium" id="premium">
+                    <i class="fas fa-gem"></i>
+                    <h3>Paquete Elite </h3>
+                    <p class="price">S/300</p>
+                    <p class="duration">3 MESES</p>
+                    <div class="features">
+                      <ul>
+                        <li><i class="fa-solid fa-futbol"></i>Inscripción S/20</li>
+                        <li><i class="fa-solid fa-futbol"></i>Uniformes S/65</li>
+                        <li><i class="fa-solid fa-futbol"></i>Mensualidad por tres meses S/85</li>
+                      </ul>
+                    </div>
+                    <button class="whatsapp-button" onclick="sendWhatsAppMessage('Precio Premium')">Me interesa</button>
+                  </div>
+
+                  <div class="pricing-card standar" id="standard">
+                    <i class="fas fa-rocket"></i>
+                    <h3>Paquete Standar</h3>
+                    <p class="price">S/281.00</p>
+                    <p class="duration">2 MESES</p>
+                    <div class="features">
+                      <ul>
+                        <li><i class="fa-solid fa-futbol"></i>Inscripción S/20</li>
+                        <li><i class="fa-solid fa-futbol"></i>Uniformes S/65</li>
+                        <li><i class="fa-solid fa-futbol"></i>Mensualidad por dos meses S/98</li>
+                      </ul>
+                    </div>
+                    <button class="whatsapp-button" onclick="sendWhatsAppMessage('Precio Standar')">Me interesa</button>
+                  </div>
+            </div>
+
+          <!-- Sección de Beneficios -->
+          <div class="pricing-benefits">
+            <h3>¿Por qué elegirnos?</h3>
+            <div class="benefit-list">
+              <div class="benefit">
+                <i class="fa fa-check-circle"></i>
+                <p>Formación integral con enfoque en el desarrollo físico y mental</p>
+              </div>
+              <div class="benefit">
+                <i class="fa fa-check-circle"></i>
+                <p>Entrenadores profesionales comprometidos con tu evolución como futbolista</p>
+              </div>
+              <div class="benefit">
+                <i class="fa fa-check-circle"></i>
+                <p>Ambiente competitivo que potencia tu crecimiento en el campo de juego</p>
+              </div>
+            </div>
+          </div>
+
+           <div class="pagos_header">  <h2>Medios básicos de pago</h2></div>
+            <div class="seccion-pagos">
+              <!-- Tarjeta de Pago BCP -->
+              <div class="tarjeta-pago">
+                <i class="fas fa-university icono-pago"></i>
+                <h3 class="titulo-pago">Pago BCP - Cuenta BCP</h3>
+                <p class="detalles-pago">Número de Cuenta: <strong>47576283510008</strong></p>
+              </div>
+
+              <!-- Tarjeta de Pago YAPE -->
+              <div class="tarjeta-pago">
+                <i class="fas fa-mobile-alt icono-pago"></i>
+                <h3 class="titulo-pago">Pago YAPE</h3>
+                <p class="detalles-pago">Número: <strong>912 933 210</strong></p>
+                <div class="qr-pago">
+                  <!--<img src="ruta-del-qr-yape.png" alt="QR Yape">-->
+                </div>
+              </div>
+
+              <!-- Tarjeta de Pago PLIN -->
+              <div class="tarjeta-pago">
+                <i class="fas fa-qrcode icono-pago"></i>
+                <h3 class="titulo-pago">Pago PLIN</h3>
+                <p class="detalles-pago">Número: <strong>912 933 210</strong></p>
+                <div class="qr-pago">
+                  <!--<img src="ruta-del-qr-plin.png" alt="QR Plin">-->
+                </div>
+              </div>
+
+              <div class="tarjeta-pago">
+                <i class="fas fa-university icono-pago"></i>
+                <h3 class="titulo-pago">Pago BCP - Cuenta CCI</h3>
+                <p class="detalles-pago">Número CCI: <strong>47576283510008</strong></p>
+              </div>
+            </div>
+
+        </section>
+         <!-- Footer -->
+        <footer class="pie-pagina">
+            <div class="enlaces-pie">
+                <div>
+                    <h4>Nosotros</h4>
+                    <ul>
+                        <li><a href="informacion.html">Quiénes somos</a></li>
+                      
+                        <li><a href="Contacto.html">Atención al cliente</a></li>
+                    </ul>
+                </div>
+               
+                <div>
+                    <h4>Datos de contacto</h4>
+                    <ul>
+                        <li><a href="#">fcsechura@gmail.com</a></li>
+                        <li><a href="#">+51 921933210</a></li>
+                        <li><a href="#">Dirección</a></li>
+                    </ul>
+                </div>
+                <div class="contacto">
+                    <h4>Estamos para ayudarte</h4>
+                    <a class="boton" href="Contacto.html">Contáctanos</a>
+                </div>
+            </div>
+            <div class="footer-content footer_container">
+                <div class="footer-info">
+                    <p>&copy; 2024 Todos los derechos reservados.</p>
+                </div>
+                <div class="social-links">
+                    <ul class="redes-sociales">
+                        <li class="red-social"><a href="#" target="_blank"><i class="fa-brands fa-tiktok"></i></a></li>
+                        <li class="red-social"><a href="#" target="_blank"><i class="fa-brands fa-whatsapp"></i></a></li>
+                        <li class="red-social"><a href="#" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
+                        <li class="red-social"><a href="https://www.facebook.com/@clinicacismedic" target="_blank"><i class="fa-brands fa-facebook"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+    </body>
+    <script src="script.js"></script>   
+    <script src="precios_script.js"></script>   
+    <script src="script_planes.js"></script>
+ </html>

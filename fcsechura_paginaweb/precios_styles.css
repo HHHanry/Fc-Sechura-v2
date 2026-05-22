@@ -1,0 +1,317 @@
+h1,h2,p{
+  text-shadow: none;
+}
+.pricing {
+  padding: 100PX 70px;
+}
+
+.pricing-title {
+  font-size: 3rem;
+  color: #fff;
+  margin-bottom: 40px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+ 
+}
+
+/* Sección de precios */
+ .pricing-container {
+      display: flex;
+      justify-content: space-around;
+      margin: 20px;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .pricing-card {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 20px;
+      width: 300px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      background-color: #fff;
+    }
+    .basic, .standar{
+      background: linear-gradient(145deg, #fff, #fffecf);
+    }
+    .pricing-card:hover {
+      transform: translateY(-10px) scale(1.05);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+      border: solid 2px #1b345a;
+    }
+    .pricing-card:active {
+      transform: translateY(-5px) scale(1.03);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      border-color: #FFA500;
+    }
+     .premium:active {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+      border-color: #65cfda;
+    }
+    .pricing-card h3 {
+      margin: 10px 0;
+    }
+    .price {
+      font-size: 24px;
+      color: #333;
+      font-weight: bold;
+     margin-bottom: 6 px;
+    }
+    .duration {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 15px;
+      padding: 2.5px;
+    }
+    .features ul {
+      list-style-type: none;
+      padding: 0;
+      text-align: left;
+      font-size: 13px;
+    }
+    .features ul li {
+      margin: 10px 0;
+      font-size: 14px;
+    }
+    .features li i{
+      color: #000;
+      font-size: 12px;
+      margin: auto 5px;
+    }
+    .premium .features i{
+      color: #fff;
+    }
+    .pricing-card i {
+      font-size: 50px;
+      color: #65cfda;
+      margin-bottom: 15px;
+    }
+    .whatsapp-button {
+      background-color: #ffea8d;
+      color: #333;
+      border: 2px solid #1b345a;
+      border-radius: 5px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .whatsapp-button:hover {
+      background-color: #fcd74d;
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+    }
+    .whatsapp-button:active {
+      background-color: #FFC107;
+      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+    }
+
+  
+/* Sección de beneficios */
+.pricing-benefits {
+  margin-top: 80px;
+  text-align: center;
+}
+
+.pricing-benefits h3 {
+ font-size: 3rem;
+  color: #fff;
+  margin-bottom: 40px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+ 
+}
+
+.benefit-list {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.benefit {
+  width: 250px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+ background: linear-gradient(145deg, #fff, #fffecf);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+   
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background-color: #fff;
+}
+.benefit:hover {
+  outline: solid 2px #1b345a;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.benefit i {
+  color: #65cfda;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.benefit p {
+  font-size: 0.9rem;
+ color: #1b345a;
+}
+/* card premiun */
+   .premium{
+      width: 320px;
+      background-color: #1b345a;  
+      color: #fff;
+    }
+    .premium .price, .premium .duration{
+      color: #fff;
+    }
+    .premium .whatsapp-button{
+      background-color: #fff;
+    }
+    .premium .whatsapp-button:hover{
+      background-color: #65cfda;
+    }
+    /* pagos */
+    .pagos_header {
+      padding: 0;
+      margin-top: 100px;
+    }
+    .pagos_header h2{
+      font-size: 40px;
+    }
+     .seccion-pagos {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      padding: 30px;
+      margin-top: 10px;
+      gap: 20px;
+    }
+
+    .tarjeta-pago {
+      background: linear-gradient(145deg, #fff, #fffecf);
+      border: 2px solid #ddd;
+      border-radius: 15px;
+      padding: 20px;
+      width: 300px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+ box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    }
+
+    .tarjeta-pago:hover {
+      transform: translateY(-10px) scale(1.05);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      border-color: #1b345a;
+    }
+
+    .icono-pago {
+      font-size: 50px;
+      color: #65cfda;
+      margin-bottom: 10px;
+    }
+
+    .titulo-pago {
+      font-size: 16px;
+    color: #1b345a;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .detalles-pago {
+      font-size: 14px;
+ color: #1b345a;
+      margin: 10px 0;
+    }
+
+    .qr-pago {
+      margin-top: 15px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .qr-pago img {
+      max-width: 100px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .qr-pago img:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+/* Adaptaciones responsivas */
+@media (max-width: 1080px) {
+  .pricing-container{
+    flex-direction: column;
+    justify-content: center;
+    gap: 50px;
+  }
+
+  .pricing-card{
+   display: flex;
+   flex-direction: column;
+    margin: auto;
+    width: 60%;
+    text-align: center;
+    justify-content: center;
+  }
+  .pricing-card li{
+    margin: auto;
+    text-align: center;
+  }
+  .pricing-card .whatsapp-button{
+    font-family: Tahoma;
+    font-size: 17px;
+    font-weight: bold;
+    letter-spacing: 2px;
+  }
+}
+@media (max-width: 768px) {
+  .pricing-container {
+        gap: 20px;
+      }
+      .pricing-card {
+        width: 60%;
+        padding: 20px;
+      
+      }
+  .pricing-title {
+    font-size: 2.5rem;
+  }
+
+}
+@media (max-width: 480px){
+  .pricing{
+    
+    margin: 10px;
+    padding: 0;
+    margin-top: 100px;
+  }
+   .pricing-container {
+        gap: 50px;
+        margin: 0;
+      }
+
+   .pricing-card{
+    width: 75%;
+  
+  }
+  .pricing-benefits h3{
+    padding: 0;
+    font-size: 2rem;
+  }
+
+}
+
+ 

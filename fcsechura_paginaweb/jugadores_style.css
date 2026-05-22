@@ -1,0 +1,221 @@
+/* Estilos generales */
+body {
+    background: linear-gradient(135deg, #1b345a, #0a1a2f);
+    margin: 0;
+    padding: 0;
+    color: #fff; /* Texto blanco para contrastar con el fondo oscuro */
+}
+
+.titulo-principal {
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 40px;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1.5px; /* Espaciado entre letras para mayor elegancia */
+    padding: 30px;
+}
+
+/* Sección de Jugadores */
+.seccion-jugadores {
+    padding: 20px;
+}
+
+.contenedor-categorias {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+}
+
+.categoria {
+    width: 100%;
+    max-width: 1200px;
+    background-color: rgba(255, 255, 255, 0.1); /* Fondo semi-transparente */
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde sutil */
+    backdrop-filter: blur(10px); /* Efecto de desenfoque para modernidad */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.titulo-categoria {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.8em;
+    color: #65cfda; /* Light blue para los títulos */
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 600;
+    text-transform: uppercase; /* Mayúsculas para un toque moderno */
+    letter-spacing: 1px;
+}
+
+/* Carrusel */
+.carrusel {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.carrusel-btn {
+    background-color: #65cfda;
+    border: none;
+    color: #fff;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.carrusel-btn:hover {
+    background-color: #1b345a;
+    transform: scale(1.1);
+}
+
+.contenedor-jugadores {
+    display: flex;
+    overflow: hidden;
+    gap: 18px;
+    scroll-behavior: smooth;
+    padding: 10px;
+}
+
+.jugador {
+    display: flex;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.1); /* Fondo semi-transparente */
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde sutil */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex: 0 0 auto;
+    width: auto;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.jugador:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.imagen-jugador {
+    width: 200px;
+    height: auto;
+    border-radius: 10px;
+    border: 3px solid #65cfda; /* Light blue para el borde */
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    cursor: pointer;
+    margin: 0;
+}
+
+.imagen-jugador:hover {
+    transform: scale(1.02);
+    border-color: #fff; /* Borde blanco al hacer hover */
+}
+
+/* Overlay y modal */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.cerrar-overlay {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: #fff;
+    font-size: 30px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.cerrar-overlay:hover {
+    color: #65cfda; /* Light blue al hacer hover */
+}
+
+.imagen-ampliada {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+
+/* Media Queries para 768px y menos */
+@media (max-width: 1080px) {
+   
+.imagen-ampliada {
+    max-width: 60%;
+    max-height: 60%;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+.cerrar-overlay {
+    position: absolute;
+    top: 160px;
+    right: 160px;
+    color: #fff;
+    font-size: 45px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.cerrar-overlay:hover {
+    color: #65cfda; /* Light blue al hacer hover */
+}
+}
+@media (max-width: 900px) {
+.cerrar-overlay {
+    position: absolute;
+    top: 150px;
+    right: 120px;
+   font-size: 35px;
+}
+
+.cerrar-overlay:hover {
+    color: #65cfda; /* Light blue al hacer hover */
+}
+}
+
+@media (max-width: 768px) {
+    .contenedor-jugadores{
+        max-width: 480px;
+        margin: auto;
+    }
+    .imagen-jugador{
+        max-width: 250px;
+    }
+
+}
+@media (max-width: 480px) {
+    .categoria{
+        display: flex;
+        flex-direction: column;
+        margin: 2px;
+    }
+    .contenedor-jugadores{
+       width: 300px;
+        margin: auto;
+
+    }
+    .jugador{
+        width: 250px;
+        margin: 0;
+
+       
+    }
+    .imagen-jugador{
+        max-width: 250px;
+        margin: auto;
+    }
+}

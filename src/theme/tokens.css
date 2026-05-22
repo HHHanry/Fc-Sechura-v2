@@ -1,0 +1,332 @@
+/* =============================================================
+   FC SECHURA — DESIGN TOKENS · Light premium + Dark
+   - Light por defecto (cálido, espacioso, premium escolar/deportivo).
+   - Dark vía [data-theme="dark"] en <html>.
+   - Cian bajado a un sky-blue sobrio. Oro mate cálido como acento premium.
+   - Todos los pares texto/fondo cumplen WCAG 2.1 AA.
+   ============================================================= */
+
+:root {
+  /* ===== BACKGROUNDS / SURFACES (LIGHT por defecto) ===== */
+  --sn-bg-base:        #F6F4EE;   /* Marfil cálido (no blanco puro) */
+  --sn-bg-surface:     #FFFFFF;   /* Cards */
+  --sn-bg-elevated:    #FFFFFF;   /* Modales / popovers */
+  --sn-bg-overlay:     rgba(15, 23, 42, 0.45);
+  --sn-bg-soft:        #FAFAF6;   /* Sub-superficies tenues */
+
+  /* ===== BRAND ===== */
+  --sn-brand-deep:     #1E3A8A;   /* Azul histórico FC Sechura */
+  --sn-brand-deep-2:   #152C6B;
+  --sn-brand-glow:     #0EA5E9;   /* Sky 500 — acento sobrio (sin neón) */
+  --sn-brand-glow-2:   #0284C7;
+  --sn-brand-gradient: linear-gradient(135deg, #1E3A8A 0%, #0EA5E9 100%);
+  --sn-brand-gradient-soft: linear-gradient(135deg, rgba(30,58,138,0.10) 0%, rgba(14,165,233,0.08) 100%);
+
+  /* ===== TIER (FIFA) — oro mate cálido, no metálico ===== */
+  --sn-tier-elite:     #C99A3B;
+  --sn-tier-gold:      #B98A2E;
+  --sn-tier-silver:    #94A3B8;
+  --sn-tier-bronze:    #B45309;
+
+  /* ===== SEMÁNTICOS ===== */
+  --sn-success:        #15803D;   /* Verde césped real */
+  --sn-success-soft:   rgba(21, 128, 61, 0.10);
+  --sn-warn:           #D97706;
+  --sn-warn-soft:      rgba(217, 119, 6, 0.10);
+  --sn-crit:           #DC2626;
+  --sn-crit-soft:      rgba(220, 38, 38, 0.10);
+  --sn-info:           #0284C7;
+  --sn-info-soft:      rgba(2, 132, 199, 0.10);
+
+  /* ===== TEXTO sobre fondo claro ===== */
+  --sn-text-primary:   #0F172A;   /* 17:1 sobre marfil */
+  --sn-text-secondary: #334155;   /* 11:1 */
+  --sn-text-muted:     #64748B;   /* 5.5:1 */
+  --sn-text-dim:       #94A3B8;   /* 4.7:1 — límite WCAG AA */
+
+  --sn-text-on-light:  #0F172A;
+  --sn-text-on-light-muted: #475569;
+  --sn-text-on-brand:  #FFFFFF;   /* Texto sobre brand-deep */
+  --sn-text-on-glow:   #FFFFFF;   /* Texto sobre brand-glow */
+  --sn-text-on-elite:  #1A1408;   /* Texto sobre oro */
+
+  /* ===== BORDES / DIVISORES ===== */
+  --sn-border-faint:   rgba(15, 23, 42, 0.06);
+  --sn-border-soft:    rgba(15, 23, 42, 0.12);
+  --sn-border-strong:  rgba(15, 23, 42, 0.22);
+  --sn-border-glow:    rgba(14, 165, 233, 0.45);
+
+  /* ===== SOMBRAS — suaves, premium escolar ===== */
+  --sn-shadow-sm:      0 1px 2px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.06);
+  --sn-shadow-md:      0 4px 12px rgba(15, 23, 42, 0.06), 0 2px 4px rgba(15, 23, 42, 0.04);
+  --sn-shadow-lg:      0 24px 48px -16px rgba(15, 23, 42, 0.18), 0 8px 16px rgba(15, 23, 42, 0.06);
+  --sn-shadow-glow:    0 0 0 1px rgba(14, 165, 233, 0.30), 0 8px 24px rgba(14, 165, 233, 0.14);
+  --sn-shadow-crit:    0 0 0 1px rgba(220, 38, 38, 0.30), 0 8px 24px rgba(220, 38, 38, 0.12);
+  --sn-shadow-elite:   0 0 0 1px rgba(201, 154, 59, 0.40), 0 8px 24px rgba(201, 154, 59, 0.18);
+
+  /* ===== INPUT BG (para que se vean en light y dark) ===== */
+  --sn-input-bg:       #FFFFFF;
+  --sn-input-border:   rgba(15, 23, 42, 0.14);
+
+  /* ===== ROWS / TRACKS / OVERLAYS sutiles ===== */
+  --sn-row-soft:       rgba(15, 23, 42, 0.03);
+  --sn-row-strong:     rgba(15, 23, 42, 0.06);
+  --sn-overlay-soft:   rgba(15, 23, 42, 0.03);
+  --sn-overlay-strong: rgba(15, 23, 42, 0.06);
+  --sn-track-bg:       rgba(15, 23, 42, 0.07);
+
+  /* ===== RADIOS ===== */
+  --sn-radius-xs: 6px;
+  --sn-radius-sm: 10px;
+  --sn-radius-md: 14px;
+  --sn-radius-lg: 20px;
+  --sn-radius-xl: 28px;
+  --sn-radius-pill: 999px;
+
+  /* ===== TIPOGRAFÍA ===== */
+  --sn-font-ui:      'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --sn-font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  --sn-font-mono:    'JetBrains Mono', 'SF Mono', Consolas, monospace;
+
+  --sn-fs-xs:   0.78rem;   /* 12.5px */
+  --sn-fs-sm:   0.9rem;    /* 14.4px */
+  --sn-fs-base: 1rem;      /* 16px */
+  --sn-fs-md:   1.15rem;   /* 18.4px */
+  --sn-fs-lg:   1.3rem;    /* 20.8px */
+  --sn-fs-xl:   1.55rem;   /* 24.8px */
+  --sn-fs-2xl:  2rem;      /* 32px */
+  --sn-fs-3xl:  2.5rem;
+  --sn-fs-4xl:  3.25rem;
+
+  --sn-lh-tight:  1.2;
+  --sn-lh-normal: 1.55;
+  --sn-lh-loose:  1.75;
+
+  --sn-tracking-tight: -0.015em;
+  --sn-tracking-wide:  0.04em;
+  --sn-tracking-mega:  0.10em;
+
+  /* ===== MOTION ===== */
+  --sn-ease:        cubic-bezier(0.20, 0.80, 0.20, 1);
+  --sn-ease-out:    cubic-bezier(0.16, 1, 0.30, 1);
+  --sn-ease-snap:   cubic-bezier(0.22, 1.20, 0.36, 1);
+
+  --sn-dur-fast:    140ms;
+  --sn-dur-base:    220ms;
+  --sn-dur-slow:    420ms;
+  --sn-dur-page:    560ms;
+
+  /* ===== Z-INDEX ===== */
+  --sn-z-base:    1;
+  --sn-z-elevated: 10;
+  --sn-z-overlay:  100;
+  --sn-z-navbar:   1100;
+  --sn-z-modal:    9000;
+  --sn-z-toast:    9500;
+  --sn-z-carnet:   9999;
+
+  /* ===== SPACING ===== */
+  --sn-space-1: 0.25rem;
+  --sn-space-2: 0.5rem;
+  --sn-space-3: 0.75rem;
+  --sn-space-4: 1rem;
+  --sn-space-5: 1.5rem;
+  --sn-space-6: 2rem;
+  --sn-space-7: 3rem;
+  --sn-space-8: 4rem;
+
+  /* ===== ALIASES legacy ===== */
+  --fc-azul:     var(--sn-brand-deep);
+  --fc-turquesa: var(--sn-brand-glow);
+  --fc-celeste:  var(--sn-brand-glow);
+
+  color-scheme: light;
+}
+
+/* =============================================================
+   DARK MODE — sobrio, sin neón
+   ============================================================= */
+:root[data-theme="dark"] {
+  --sn-bg-base:        #0B0F18;
+  --sn-bg-surface:     #131A28;
+  --sn-bg-elevated:    #1A2236;
+  --sn-bg-overlay:     rgba(7, 9, 15, 0.78);
+  --sn-bg-soft:        #0F1521;
+
+  --sn-brand-glow:     #38BDF8;   /* Sky-400 — más suave que el cyan original */
+  --sn-brand-glow-2:   #0EA5E9;
+  --sn-brand-gradient: linear-gradient(135deg, #1E3A8A 0%, #38BDF8 100%);
+  --sn-brand-gradient-soft: linear-gradient(135deg, rgba(30,58,138,0.18) 0%, rgba(56,189,248,0.10) 100%);
+
+  --sn-success:        #22C55E;
+  --sn-success-soft:   rgba(34, 197, 94, 0.12);
+  --sn-warn:           #F59E0B;
+  --sn-warn-soft:      rgba(245, 158, 11, 0.12);
+  --sn-crit:           #EF4444;
+  --sn-crit-soft:      rgba(239, 68, 68, 0.12);
+  --sn-info:           #38BDF8;
+  --sn-info-soft:      rgba(56, 189, 248, 0.12);
+
+  --sn-tier-elite:     #E0B45A;   /* Oro mate más claro para dark */
+
+  --sn-text-primary:   #F8FAFC;
+  --sn-text-secondary: #CBD5E1;
+  --sn-text-muted:     #94A3B8;
+  --sn-text-dim:       #64748B;
+
+  --sn-border-faint:   rgba(148, 163, 184, 0.10);
+  --sn-border-soft:    rgba(148, 163, 184, 0.18);
+  --sn-border-strong:  rgba(148, 163, 184, 0.32);
+  --sn-border-glow:    rgba(56, 189, 248, 0.40);
+
+  --sn-shadow-sm:      0 1px 2px rgba(0, 0, 0, 0.30);
+  --sn-shadow-md:      0 8px 24px rgba(0, 0, 0, 0.35);
+  --sn-shadow-lg:      0 24px 48px -12px rgba(0, 0, 0, 0.55);
+  --sn-shadow-glow:    0 0 0 1px rgba(56, 189, 248, 0.35), 0 8px 30px rgba(56, 189, 248, 0.18);
+  --sn-shadow-crit:    0 0 0 1px rgba(239, 68, 68, 0.35), 0 8px 30px rgba(239, 68, 68, 0.18);
+  --sn-shadow-elite:   0 0 0 1px rgba(224, 180, 90, 0.40), 0 8px 30px rgba(224, 180, 90, 0.18);
+
+  --sn-input-bg:       rgba(7, 9, 15, 0.55);
+  --sn-input-border:   rgba(148, 163, 184, 0.20);
+
+  --sn-row-soft:       rgba(148, 163, 184, 0.04);
+  --sn-row-strong:     rgba(148, 163, 184, 0.08);
+  --sn-overlay-soft:   rgba(7, 9, 15, 0.40);
+  --sn-overlay-strong: rgba(7, 9, 15, 0.65);
+  --sn-track-bg:       rgba(148, 163, 184, 0.10);
+
+  color-scheme: dark;
+}
+
+/* =============================================================
+   APLICAR FONDO + COLOR AL DOCUMENTO
+   ============================================================= */
+html, body, #root {
+  background-color: var(--sn-bg-base);
+  color: var(--sn-text-primary);
+  transition: background-color var(--sn-dur-base) var(--sn-ease), color var(--sn-dur-base) var(--sn-ease);
+}
+
+body {
+  font-family: var(--sn-font-ui);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* =============================================================
+   KEYFRAMES
+   ============================================================= */
+@keyframes sn-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes sn-slide-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes sn-slide-down {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes sn-pop {
+  0%   { opacity: 0; transform: scale(0.94); }
+  60%  { transform: scale(1.02); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes sn-shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes sn-pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.35); }
+  50%      { box-shadow: 0 0 0 8px rgba(14, 165, 233, 0); }
+}
+
+@keyframes sn-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes sn-holo-shine {
+  0%   { left: -100%; }
+  20%  { left: 200%; }
+  100% { left: 200%; }
+}
+
+@keyframes sn-sparkle {
+  0%, 100% { opacity: 0; transform: scale(0.5); }
+  50%      { opacity: 1; transform: scale(1.4); }
+}
+
+/* =============================================================
+   UTILIDADES
+   ============================================================= */
+.sn-surface {
+  background-color: var(--sn-bg-surface);
+  color: var(--sn-text-primary);
+  border: 1px solid var(--sn-border-faint);
+  border-radius: var(--sn-radius-lg);
+}
+
+.sn-text-primary   { color: var(--sn-text-primary); }
+.sn-text-secondary { color: var(--sn-text-secondary); }
+.sn-text-muted     { color: var(--sn-text-muted); }
+.sn-text-dim       { color: var(--sn-text-dim); }
+
+.sn-display { font-family: var(--sn-font-display); letter-spacing: var(--sn-tracking-tight); }
+.sn-mono    { font-family: var(--sn-font-mono); }
+.sn-tracking-mega { letter-spacing: var(--sn-tracking-mega); text-transform: uppercase; }
+
+.sn-focusable:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.30);
+  border-color: var(--sn-brand-glow) !important;
+}
+:root[data-theme="dark"] .sn-focusable:focus-visible {
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.35);
+}
+
+/* Scrollbars */
+.sn-scroll::-webkit-scrollbar      { width: 8px; height: 8px; }
+.sn-scroll::-webkit-scrollbar-track { background: transparent; }
+.sn-scroll::-webkit-scrollbar-thumb {
+  background: var(--sn-border-soft);
+  border-radius: var(--sn-radius-pill);
+}
+.sn-scroll::-webkit-scrollbar-thumb:hover { background: var(--sn-border-strong); }
+.sn-scroll { scrollbar-width: thin; scrollbar-color: var(--sn-border-soft) transparent; }
+
+/* =============================================================
+   MOBILE — más respiro, más legibilidad
+   ============================================================= */
+@media (max-width: 640px) {
+  :root {
+    --sn-fs-base: 1.05rem;   /* +5% en mobile */
+    --sn-fs-sm:   0.95rem;
+    --sn-fs-xs:   0.82rem;
+    --sn-fs-md:   1.2rem;
+    --sn-fs-lg:   1.4rem;
+    --sn-fs-xl:   1.65rem;
+    --sn-fs-2xl:  1.85rem;
+    --sn-fs-3xl:  2.2rem;
+    --sn-fs-4xl:  2.7rem;
+  }
+  /* Inputs táctiles más cómodos */
+  input, select, textarea, button {
+    font-size: 16px !important;  /* evita zoom auto en iOS */
+    min-height: 44px;            /* área táctil mínima */
+  }
+}
+
+/* Reducción de movimiento — accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
