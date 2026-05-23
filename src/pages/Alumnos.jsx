@@ -267,7 +267,8 @@ const RowActions = ({ a, onCarnet, onEditar, onEliminar }) => (
   </div>
 );
 
-const IconBtn = ({ as: Tag = 'button', tone = 'brand', children, ...rest }) => {
+const IconBtn = ({ as = 'button', tone = 'brand', children, ...rest }) => {
+  const rel = rest.target === '_blank' && !rest.rel ? 'noreferrer' : rest.rel;
   const colors = {
     brand:   { c: 'var(--sn-brand-glow)', b: 'color-mix(in srgb, var(--sn-brand-glow) 32%, transparent)' },
     success: { c: 'var(--sn-success)',    b: 'rgba(16,185,129,0.30)' },
@@ -275,11 +276,13 @@ const IconBtn = ({ as: Tag = 'button', tone = 'brand', children, ...rest }) => {
     crit:    { c: 'var(--sn-crit)',       b: 'rgba(239,68,68,0.30)'  },
     elite:   { c: 'var(--sn-tier-elite)', b: 'rgba(251,191,36,0.30)' },
   }[tone];
-  return (
-    <Tag
-      {...rest}
-      className="sn-focusable"
-      style={{
+  return React.createElement(
+    as,
+    {
+      ...rest,
+      rel,
+      className: 'sn-focusable',
+      style: {
         width: 34, height: 34,
         display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
         borderRadius: 'var(--sn-radius-sm)',
@@ -289,12 +292,11 @@ const IconBtn = ({ as: Tag = 'button', tone = 'brand', children, ...rest }) => {
         cursor: 'pointer',
         textDecoration: 'none',
         transition: 'background var(--sn-dur-fast) var(--sn-ease), transform var(--sn-dur-fast) var(--sn-ease)',
-      }}
-      onMouseEnter={(e) => { e.currentTarget.style.background = `${colors.c}22`; }}
-      onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(15,20,34,0.65)'; }}
-    >
-      {children}
-    </Tag>
+      },
+      onMouseEnter: (e) => { e.currentTarget.style.background = `${colors.c}22`; },
+      onMouseLeave: (e) => { e.currentTarget.style.background = 'rgba(15,20,34,0.65)'; },
+    },
+    children,
   );
 };
 

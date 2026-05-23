@@ -1,4 +1,4 @@
-import { useQuery, invalidate } from './useFirestoreCache';
+import { useQuery, invalidatePrefix } from './useFirestoreCache';
 import { asistenciaService } from '../services/asistenciaService';
 
 const KEY = 'asistencias';
@@ -16,12 +16,14 @@ export const useAsistenciaPorFecha = (fechaIso) => {
 };
 
 export const useAsistenciaDeAlumno = (alumnoId) => {
-  const q = useQuery(`${KEY}:alumno:${alumnoId}`, () => asistenciaService.porAlumno(alumnoId), [alumnoId]);
+  const q = useQuery(`${KEY}:alumno:${alumnoId ?? 'none'}`, () => (
+    alumnoId ? asistenciaService.porAlumno(alumnoId) : Promise.resolve([])
+  ), [alumnoId]);
   return { asistencias: q.data ?? [], loading: q.loading, error: q.error };
 };
 
 export const mutarAsistencia = {
-  registrar:  async (data) => { const r = await asistenciaService.registrar(data); invalidate(KEY); return r; },
-  actualizar: async (id, data) => { const r = await asistenciaService.actualizar(id, data); invalidate(KEY); return r; },
-  eliminar:   async (id) => { const r = await asistenciaService.eliminar(id); invalidate(KEY); return r; },
+  registrar:  async (data) => { const r = await asistenciaService.registrar(data); invalidatePrefix(KEY); return r; },
+  actualizar: async (id, data) => { const r = await asistenciaService.actualizar(id, data); invalidatePrefix(KEY); return r; },
+  eliminar:   async (id) => { const r = await asistenciaService.eliminar(id); invalidatePrefix(KEY); return r; },
 };

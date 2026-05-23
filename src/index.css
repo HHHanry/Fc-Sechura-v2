@@ -1,13 +1,48 @@
 :root {
-  --fc-azul: #1e3a8a;
-  --fc-turquesa: #0d9488;
-  --fc-celeste: #7dd3fc;
-  --fc-bg: #f8fafc;
+  --fc-azul: var(--sn-brand-deep);
+  --fc-turquesa: var(--sn-brand-glow);
+  --fc-celeste: var(--sn-brand-glow);
+  --fc-bg: var(--sn-bg-base);
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
-  background-color: var(--fc-bg);
+  background-color: var(--sn-bg-base);
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+.sn-app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--sn-bg-base);
+  color: var(--sn-text-primary);
+}
+
+.sn-app-main {
+  flex: 1 0 auto;
+  min-width: 0;
+}
+
+.sn-app-credit {
+  flex-shrink: 0;
+  text-align: center;
+  padding: 0.85rem 1rem 1.1rem;
+  color: var(--sn-text-muted);
+  font-size: var(--sn-fs-xs);
+  font-weight: 700;
+  letter-spacing: var(--sn-tracking-wide);
+  background: color-mix(in srgb, var(--sn-bg-base) 88%, var(--sn-brand-glow) 12%);
+  border-top: 1px solid var(--sn-border-faint);
 }
 
 /* Bordado de inputs */
@@ -351,6 +386,11 @@ body {
   }
   
   h1 { font-size: 1.8rem; } /* Títulos más amigables en móvil */
+
+  .sn-app-credit {
+    padding: 0.75rem 0.75rem 1rem;
+    line-height: 1.35;
+  }
 }
 @keyframes scan {
   0% { top: 0; }
@@ -360,3 +400,70 @@ body {
 /* Animaciones */
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* =============================================================
+   RESPONSIVE GLOBAL — fixes para layouts inline-styled
+   Selecciones por atributo + !important ganan a estilos inline no-important.
+   Sin tocar cada página, colapsamos los grids más comunes en móvil.
+   ============================================================= */
+@media (max-width: 640px) {
+  /* Containers principales — más respiro horizontal */
+  .sn-app-main > div > div[style*="max-width: 1280"],
+  .sn-app-main > div[style*="max-width: 1280"] {
+    padding-left: var(--sn-space-3) !important;
+    padding-right: var(--sn-space-3) !important;
+  }
+
+  /* Grids fijos de 2 cols → apilar */
+  [style*="grid-template-columns: 1fr 1fr"],
+  [style*="grid-template-columns: 1fr 2fr"],
+  [style*="grid-template-columns: 2fr 1fr"],
+  [style*="grid-template-columns: 1.4fr"],
+  [style*="grid-template-columns: 2fr 1.05fr"],
+  [style*="grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr)"],
+  [style*="grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr)"],
+  [style*="grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr)"],
+  [style*="grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr)"],
+  [style*="grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr)"],
+  [style*="grid-template-columns: minmax(0, 1fr) minmax(0, 2fr)"],
+  [style*="grid-template-columns: minmax(0, 1fr) minmax(0, 2.2fr)"],
+  [style*="grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr)"],
+  [style*="grid-template-columns: minmax(0, 2fr) minmax(0, 1fr)"],
+  [style*="grid-template-columns: minmax(0, 300px)"],
+  [style*="grid-template-columns: minmax(220px, 2fr)"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Cabeceras con título + botón: que el botón ocupe ancho completo si toca otro renglón */
+  header[style*="justify-content: space-between"][style*="flex-wrap: wrap"] > * {
+    min-width: 0;
+  }
+
+  /* Modales: padding lateral menor */
+  .modal-overlay > * { max-width: 100% !important; }
+
+  /* Inputs/select/textarea — tamaño táctil */
+  input, select, textarea, button { min-height: 44px; }
+}
+
+/* =============================================================
+   TABLET (641–991): preservar 2 cols pero más juntas
+   ============================================================= */
+@media (min-width: 641px) and (max-width: 991.98px) {
+  /* Container principal con padding moderado */
+  div[style*="max-width: 1280"] {
+    padding-left: var(--sn-space-4) !important;
+    padding-right: var(--sn-space-4) !important;
+  }
+}
+
+/* =============================================================
+   TABLAS — scroll horizontal limpio en mobile
+   ============================================================= */
+@media (max-width: 768px) {
+  table { font-size: var(--sn-fs-sm); }
+  table th, table td {
+    padding: 0.6rem 0.7rem !important;
+    white-space: nowrap;
+  }
+}

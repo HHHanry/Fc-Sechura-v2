@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 
 /**
  * PROTECTED ROUTE V2 - FC SECHURA
@@ -13,7 +13,7 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
   // 1. Mientras el Context está verificando el rol en Firestore, mostramos el spinner
   if (loading) {
     return (
-      <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
+      <div className="d-flex justify-content-center align-items-center vh-100" style={{ background: 'var(--sn-bg-base)', color: 'var(--sn-text-primary)' }}>
         <div className="spinner-border text-primary" style={{ width: '3rem', height: '3rem' }} role="status">
           <span className="visually-hidden">Cargando permisos...</span>
         </div>
@@ -30,9 +30,12 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
   // Ejemplo: Un entrenador intentando entrar a /caja
   if (allowedRoles && !allowedRoles.includes(user.rol)) {
     return (
-      <div className="container py-5 text-center shadow-sm rounded-4 bg-white mt-5 border border-danger border-opacity-25" style={{maxWidth: '500px'}}>
+      <div
+        className="container py-5 text-center shadow-sm rounded-4 mt-5 border border-danger border-opacity-25"
+        style={{ maxWidth: '500px', background: 'var(--sn-bg-surface)', color: 'var(--sn-text-primary)' }}
+      >
         <i className="fas fa-user-shield fa-4x text-danger mb-4 opacity-75"></i>
-        <h2 className="fw-black text-dark">Acceso Denegado</h2>
+        <h2 className="fw-black" style={{ color: 'var(--sn-text-primary)' }}>Acceso Denegado</h2>
         <p className="text-muted fs-5">Tu perfil de <strong>{user.rol}</strong> no tiene permisos para esta sección administrativa.</p>
         <button className="btn btn-turquesa text-white fw-bold px-5 rounded-pill mt-3 shadow" onClick={() => window.history.back()}>
           <i className="fas fa-arrow-left me-2"></i> Volver atrás

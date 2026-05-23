@@ -1,33 +1,44 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { auth, db } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
+import { AuthContext } from './auth-context-base';
 
-const AuthContext = createContext();
+const getUserDoc = async (firebaseUser) => {
+  const uidSnap = await getDoc(doc(db, 'usuarios', firebaseUser.uid));
+  if (uidSnap.exists()) return { authDocId: uidSnap.id, ...uidSnap.data() };
+
+  const email = firebaseUser.email?.toLowerCase().trim();
+  if (!email) return null;
+
+  const emailSnap = await getDoc(doc(db, 'usuarios', email));
+  return emailSnap.exists() ? { authDocId: emailSnap.id, ...emailSnap.data() } : null;
+};
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Escuchador de sesión de Firebase
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      if (firebaseUser) {
-        // Si hay usuario, buscamos su ROL en la colección 'usuarios'
-        const docRef = doc(db, 'usuarios', firebaseUser.uid);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-          // Fusionamos los datos de Auth con los de Firestore (Rol, nombre, etc)
-          setUser({ uid: firebaseUser.uid, email: firebaseUser.email, ...docSnap.data() });
+      try {
+        if (firebaseUser) {
+          const perfil = await getUserDoc(firebaseUser);
+          if (perfil) {
+            setUser({ uid: firebaseUser.uid, email: firebaseUser.email, ...perfil });
+          } else {
+            setUser({ uid: firebaseUser.uid, email: firebaseUser.email, rol: 'invitado' });
+          }
         } else {
-          // Si no existe en Firestore, le asignamos un rol básico o null
-          setUser({ uid: firebaseUser.uid, email: firebaseUser.email, rol: 'invitado' });
+          setUser(null);
         }
-      } else {
-        setUser(null);
+      } catch {
+        setUser(firebaseUser
+          ? { uid: firebaseUser.uid, email: firebaseUser.email, rol: 'invitado' }
+          : null);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     });
 
     return () => unsubscribe();
@@ -39,6 +50,3 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-
-// Hook personalizado para usar el contexto fácilmente
-export const useAuth = () => useContext(AuthContext);

@@ -9,7 +9,7 @@ import React from 'react';
  *  - "tier":     fondo dorado tipo "tarjeta élite FIFA".
  */
 export const Card = React.forwardRef(function Card(
-  { variant = 'surface', as: Tag = 'div', children, style, className = '', interactive = false, ...rest },
+  { variant = 'surface', as = 'div', children, style, className = '', interactive = false, ...rest },
   ref,
 ) {
   const base = {
@@ -40,17 +40,17 @@ export const Card = React.forwardRef(function Card(
     },
   };
   const merged = { ...base, ...variants[variant], ...style };
-  return (
-    <Tag
-      ref={ref}
-      className={`${interactive ? 'sn-focusable' : ''} ${className}`}
-      style={merged}
-      onMouseEnter={interactive ? (e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.borderColor = 'var(--sn-border-glow)'; } : undefined}
-      onMouseLeave={interactive ? (e) => { e.currentTarget.style.transform = ''; e.currentTarget.style.borderColor = ''; } : undefined}
-      {...rest}
-    >
-      {children}
-    </Tag>
+  return React.createElement(
+    as,
+    {
+      ref,
+      className: `${interactive ? 'sn-focusable' : ''} ${className}`,
+      style: merged,
+      onMouseEnter: interactive ? (e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.borderColor = 'var(--sn-border-glow)'; } : undefined,
+      onMouseLeave: interactive ? (e) => { e.currentTarget.style.transform = ''; e.currentTarget.style.borderColor = ''; } : undefined,
+      ...rest,
+    },
+    children,
   );
 });
 

@@ -1,10 +1,10 @@
-import React, { useMemo, useState } from 'react';
+﻿import React, { useMemo, useState } from 'react';
 import { Modal, Button } from '../../components/ui';
 import { ubigeoPeru, calcularEdad } from './ubigeo';
 import { CATEGORIAS } from '../../config/businessRules';
 import { toast } from '../../hooks/useToast';
 
-const FOTO_MAX_BYTES = 800_000;
+const FOTO_MAX_BYTES = 550_000;
 
 const fileToBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -17,7 +17,7 @@ const fileToBase64 = (file) =>
 const initialState = (hoy) => ({
   nombre: '', apellido: '', edad: '', categoria: '6', dni: '', fechaNacimiento: '',
   apoderado: '', celular: '', colegio: '',
-  pais: 'Perú', departamento: 'Piura', provincia: 'Sechura', distrito: 'Sechura', direccion: '',
+  pais: 'PerÃº', departamento: 'Piura', provincia: 'Sechura', distrito: 'Sechura', direccion: '',
   foto: null, fechaInscripcion: hoy, vencimientoMensualidad: hoy,
 });
 
@@ -29,7 +29,7 @@ export const AlumnoForm = ({ open, modoEdicion, alumno, hoy, onSubmit, onClose, 
   React.useEffect(() => {
     setFormData(alumno ? {
       ...alumno,
-      pais: alumno.pais || 'Perú',
+      pais: alumno.pais || 'PerÃº',
       departamento: alumno.departamento || 'Piura',
       provincia: alumno.provincia || alumno.ciudad || 'Sechura',
       distrito: alumno.distrito || 'Sechura',
@@ -69,7 +69,7 @@ export const AlumnoForm = ({ open, modoEdicion, alumno, hoy, onSubmit, onClose, 
     const f = e.target.files?.[0];
     if (!f) return;
     if (f.size > FOTO_MAX_BYTES) {
-      toast.warn(`La foto pesa ${(f.size / 1024).toFixed(0)}KB. Máximo permitido: 800KB.`);
+      toast.warn(`La foto pesa ${(f.size / 1024).toFixed(0)}KB. Maximo permitido: 550KB.`);
       e.target.value = '';
       return;
     }
@@ -82,7 +82,7 @@ export const AlumnoForm = ({ open, modoEdicion, alumno, hoy, onSubmit, onClose, 
     if (!modoEdicion) {
       const dniDuplicado = alumnosExistentes.some((a) => a.dni === formData.dni);
       if (dniDuplicado) {
-        toast.error('Este DNI ya está registrado en el sistema.');
+        toast.error('Este DNI ya estÃ¡ registrado en el sistema.');
         return;
       }
     }
@@ -98,7 +98,7 @@ export const AlumnoForm = ({ open, modoEdicion, alumno, hoy, onSubmit, onClose, 
       onClose={onClose}
       size="xl"
       title={modoEdicion ? 'Editar ficha del alumno' : 'Registrar nuevo alumno'}
-      description={modoEdicion ? 'Modifica los datos. Los cambios se reflejarán al guardar.' : 'Completa la ficha del nuevo jugador. El estado de cuenta nace como pendiente.'}
+      description={modoEdicion ? 'Modifica los datos. Los cambios se reflejarÃ¡n al guardar.' : 'Completa la ficha del nuevo jugador. El estado de cuenta nace como pendiente.'}
       footer={
         <>
           <Button type="button" variant="ghost" onClick={onClose} disabled={cargando}>Cancelar</Button>
@@ -117,40 +117,40 @@ export const AlumnoForm = ({ open, modoEdicion, alumno, hoy, onSubmit, onClose, 
           <Grid cols={3}>
             <Field label="DNI" name="dni" value={formData.dni} onChange={handleChange} maxLength={8} disabled={modoEdicion} required />
             <Field label="Fecha de nacimiento" type="date" name="fechaNacimiento" value={formData.fechaNacimiento} onChange={handleChange} required />
-            <Field label="Edad calculada" name="edad" value={formData.edad} readOnly placeholder="—" />
+            <Field label="Edad calculada" name="edad" value={formData.edad} readOnly placeholder="â€”" />
           </Grid>
         </Section>
 
         <Section title="2. Residencia">
           <Grid cols={4}>
-            <Select label="País" name="pais" value={formData.pais} onChange={handleChange} required options={Object.keys(ubigeoPeru)} />
+            <Select label="PaÃ­s" name="pais" value={formData.pais} onChange={handleChange} required options={Object.keys(ubigeoPeru)} />
             <Select label="Departamento" name="departamento" value={formData.departamento} onChange={handleChange} required options={departamentos} />
             <Select label="Provincia" name="provincia" value={formData.provincia} onChange={handleChange} required options={provincias} />
             <Select label="Distrito" name="distrito" value={formData.distrito} onChange={handleChange} required options={distritos} highlight />
           </Grid>
         </Section>
 
-        <Section title="3. Académico y contacto">
+        <Section title="3. AcadÃ©mico y contacto">
           <Grid cols={3}>
             <Field label="Celular (WhatsApp)" name="celular" value={formData.celular} onChange={handleChange} placeholder="Opcional" />
-            <Field label="Dirección específica" name="direccion" value={formData.direccion} onChange={handleChange} placeholder="Calle, Mz, Lote..." />
-            <Field label="Institución educativa" name="colegio" value={formData.colegio} onChange={handleChange} placeholder="Opcional" />
+            <Field label="DirecciÃ³n especÃ­fica" name="direccion" value={formData.direccion} onChange={handleChange} placeholder="Calle, Mz, Lote..." />
+            <Field label="InstituciÃ³n educativa" name="colegio" value={formData.colegio} onChange={handleChange} placeholder="Opcional" />
           </Grid>
           <Grid cols={2}>
             <Field label="Apoderado responsable" name="apoderado" value={formData.apoderado} onChange={handleChange} required placeholder="Obligatorio (contacto de emergencia)" />
-            <Select label="Categoría deportiva" name="categoria" value={formData.categoria} onChange={handleChange} required
+            <Select label="CategorÃ­a deportiva" name="categoria" value={formData.categoria} onChange={handleChange} required
               options={CATEGORIAS} renderOption={(c) => `Cat. ${c}`}
             />
           </Grid>
         </Section>
 
-        <Section title="4. Parámetros de facturación" highlight>
+        <Section title="4. ParÃ¡metros de facturaciÃ³n" highlight>
           <Grid cols={2}>
-            <Field label="Fecha de inscripción" type="date" name="fechaInscripcion" value={formData.fechaInscripcion} onChange={handleChange} required
+            <Field label="Fecha de inscripciÃ³n" type="date" name="fechaInscripcion" value={formData.fechaInscripcion} onChange={handleChange} required
               hint={!modoEdicion ? 'El estado nace como PENDIENTE hasta que registre su primer pago en Caja.' : null}
             />
             <Field label="Vencimiento del mes (corte)" type="date" name="vencimientoMensualidad" value={formData.vencimientoMensualidad} onChange={handleChange} required
-              hint="Por defecto coincide con la inscripción. Avanza al cobrar."
+              hint="Por defecto coincide con la inscripciÃ³n. Avanza al cobrar."
             />
           </Grid>
         </Section>

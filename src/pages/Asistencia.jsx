@@ -13,7 +13,7 @@ const HORA_TARDE = 21;
 const Asistencia = () => {
   const { alumnos } = useAlumnos();
   const { dmy: fechaHoyDmy } = formatDateLima();
-  const { asistencias, refetch } = useAsistenciaHoy(fechaHoyDmy);
+  const { asistencias } = useAsistenciaHoy(fechaHoyDmy);
 
   const [camaraActiva, setCamaraActiva]   = useState(false);
   const [filtroCategoria, setFiltroCategoria] = useState('Todas');

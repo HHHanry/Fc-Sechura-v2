@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { db } from '../firebase';
 import { doc, updateDoc, addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { PRECIO_MENSUALIDAD } from '../config/businessRules';
 
 const ModalRegistrarPago = ({ isOpen, onClose, alumno }) => {
-  const MENSUALIDAD_BASE = 60.00;
+  const MENSUALIDAD_BASE = PRECIO_MENSUALIDAD;
   
   const [montoPagado, setMontoPagado] = useState(MENSUALIDAD_BASE);
   const [cargando, setCargando] = useState(false);

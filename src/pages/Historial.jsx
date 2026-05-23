@@ -7,6 +7,13 @@ import { Card, CardBody, Button, Badge, DataTable, Modal, EmptyState, KpiCard } 
 
 const PRECIO_CANCHA = 3;
 
+const escapeHtml = (value = '') => String(value)
+  .replace(/&/g, '&amp;')
+  .replace(/</g, '&lt;')
+  .replace(/>/g, '&gt;')
+  .replace(/"/g, '&quot;')
+  .replace(/'/g, '&#039;');
+
 const Historial = () => {
   const { iso: hoyIso } = formatDateLima();
   const [fecha, setFecha]                   = useState(hoyIso);
@@ -73,7 +80,7 @@ const Historial = () => {
   };
 
   const exportarPDF = () => {
-    const w = window.open('', '_blank');
+    const w = window.open('', '_blank', 'noopener,noreferrer');
     if (!w) return;
     const filas = visibles.length === 0
       ? `<tr><td colspan="7" style="padding:20px;text-align:center;color:#64748b">No hay registros para mostrar.</td></tr>`
@@ -81,13 +88,13 @@ const Historial = () => {
           const tono = r.estado === 'Asistió' ? 'text-success' : r.estado === 'Tarde' ? 'text-warning' : 'text-danger';
           const cancha = r.estado === 'Faltó' ? '—' : (r.pagoCancha ? 'Pagó' : 'No pagó');
           return `<tr>
-            <td><strong>${r.nombre}</strong></td>
-            <td class="c">${r.dni}</td>
-            <td class="c">Cat. ${r.categoria}</td>
-            <td class="c">${r.horaIngreso}</td>
-            <td class="c">${r.horaSalida}</td>
+            <td><strong>${escapeHtml(r.nombre)}</strong></td>
+            <td class="c">${escapeHtml(r.dni)}</td>
+            <td class="c">Cat. ${escapeHtml(r.categoria)}</td>
+            <td class="c">${escapeHtml(r.horaIngreso)}</td>
+            <td class="c">${escapeHtml(r.horaSalida)}</td>
             <td class="c">${cancha}</td>
-            <td class="c ${tono}">${r.estado}</td>
+            <td class="c ${tono}">${escapeHtml(r.estado)}</td>
           </tr>`;
         }).join('');
     w.document.write(`
@@ -109,7 +116,7 @@ const Historial = () => {
       </style></head><body>
         <div class="h">
           <div><h1>Reporte de Asistencia</h1>
-            <p style="margin:4px 0 0;color:#64748b">Fecha: <strong>${fecha}</strong> · Categoría: ${filtroCategoria}</p>
+            <p style="margin:4px 0 0;color:#64748b">Fecha: <strong>${escapeHtml(fecha)}</strong> · Categoría: ${escapeHtml(filtroCategoria)}</p>
           </div>
           <div style="text-align:right">
             <h3 style="color:#1e3a8a;margin:0">${formatMoney(totalCajaChica)}</h3>
@@ -134,11 +141,11 @@ const Historial = () => {
 
   const exportarExcel = () => {
     const filas = visibles.map((r) => `
-      <tr><td>${r.nombre}</td><td>${r.dni}</td><td>Cat. ${r.categoria}</td>
-      <td>${r.horaIngreso}</td><td>${r.horaSalida}</td>
-      <td>${r.pagoCancha ? `Pagó S/${PRECIO_CANCHA}` : 'No pagó'}</td><td>${r.estado}</td></tr>
+      <tr><td>${escapeHtml(r.nombre)}</td><td>${escapeHtml(r.dni)}</td><td>Cat. ${escapeHtml(r.categoria)}</td>
+      <td>${escapeHtml(r.horaIngreso)}</td><td>${escapeHtml(r.horaSalida)}</td>
+      <td>${r.pagoCancha ? `Pagó S/${PRECIO_CANCHA}` : 'No pagó'}</td><td>${escapeHtml(r.estado)}</td></tr>
     `).join('');
-    const html = `<html><body><h2>Reporte de Asistencia · FC Sechura · ${fecha}</h2>
+    const html = `<html><body><h2>Reporte de Asistencia · FC Sechura · ${escapeHtml(fecha)}</h2>
       <table border="1"><thead><tr><th>ALUMNO</th><th>DNI</th><th>CATEGORÍA</th><th>INGRESO</th><th>SALIDA</th><th>CANCHA</th><th>ESTADO</th></tr></thead>
       <tbody>${filas}</tbody></table></body></html>`;
     const blob = new Blob([html], { type: 'application/vnd.ms-excel' });

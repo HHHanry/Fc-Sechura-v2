@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from 'react';
 import { useConvocatorias, mutarConvocatorias } from '../hooks/useConvocatorias';
-import { mutarAlumnos } from '../hooks/useAlumnos';
 import { invalidate } from '../hooks/useFirestoreCache';
 import { increment, arrayUnion } from '../services/firestoreClient';
 import { alumnosService } from '../services/alumnosService';

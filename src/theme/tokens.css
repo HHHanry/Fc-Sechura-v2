@@ -8,19 +8,19 @@
 
 :root {
   /* ===== BACKGROUNDS / SURFACES (LIGHT por defecto) ===== */
-  --sn-bg-base:        #F6F4EE;   /* Marfil cálido (no blanco puro) */
+  --sn-bg-base:        #F4F7FB;   /* Claro administrativo, limpio y deportivo */
   --sn-bg-surface:     #FFFFFF;   /* Cards */
   --sn-bg-elevated:    #FFFFFF;   /* Modales / popovers */
   --sn-bg-overlay:     rgba(15, 23, 42, 0.45);
-  --sn-bg-soft:        #FAFAF6;   /* Sub-superficies tenues */
+  --sn-bg-soft:        #EEF4FA;   /* Sub-superficies tenues */
 
   /* ===== BRAND ===== */
-  --sn-brand-deep:     #1E3A8A;   /* Azul histórico FC Sechura */
-  --sn-brand-deep-2:   #152C6B;
-  --sn-brand-glow:     #0EA5E9;   /* Sky 500 — acento sobrio (sin neón) */
-  --sn-brand-glow-2:   #0284C7;
-  --sn-brand-gradient: linear-gradient(135deg, #1E3A8A 0%, #0EA5E9 100%);
-  --sn-brand-gradient-soft: linear-gradient(135deg, rgba(30,58,138,0.10) 0%, rgba(14,165,233,0.08) 100%);
+  --sn-brand-deep:     #173B82;   /* Azul histórico FC Sechura */
+  --sn-brand-deep-2:   #0F2A62;
+  --sn-brand-glow:     #0B8FD9;   /* Sky sobrio para modo claro */
+  --sn-brand-glow-2:   #0369A1;
+  --sn-brand-gradient: linear-gradient(135deg, #173B82 0%, #0B8FD9 100%);
+  --sn-brand-gradient-soft: linear-gradient(135deg, rgba(23,59,130,0.10) 0%, rgba(11,143,217,0.08) 100%);
 
   /* ===== TIER (FIFA) — oro mate cálido, no metálico ===== */
   --sn-tier-elite:     #C99A3B;
@@ -147,16 +147,16 @@
    DARK MODE — sobrio, sin neón
    ============================================================= */
 :root[data-theme="dark"] {
-  --sn-bg-base:        #0B0F18;
-  --sn-bg-surface:     #131A28;
-  --sn-bg-elevated:    #1A2236;
+  --sn-bg-base:        #05070D;
+  --sn-bg-surface:     #0D1424;
+  --sn-bg-elevated:    #111B31;
   --sn-bg-overlay:     rgba(7, 9, 15, 0.78);
-  --sn-bg-soft:        #0F1521;
+  --sn-bg-soft:        #07101E;
 
-  --sn-brand-glow:     #38BDF8;   /* Sky-400 — más suave que el cyan original */
-  --sn-brand-glow-2:   #0EA5E9;
-  --sn-brand-gradient: linear-gradient(135deg, #1E3A8A 0%, #38BDF8 100%);
-  --sn-brand-gradient-soft: linear-gradient(135deg, rgba(30,58,138,0.18) 0%, rgba(56,189,248,0.10) 100%);
+  --sn-brand-glow:     #22D3EE;   /* HUD stadium / FIFA */
+  --sn-brand-glow-2:   #38BDF8;
+  --sn-brand-gradient: linear-gradient(135deg, #1E3A8A 0%, #22D3EE 100%);
+  --sn-brand-gradient-soft: linear-gradient(135deg, rgba(30,58,138,0.26) 0%, rgba(34,211,238,0.14) 100%);
 
   --sn-success:        #22C55E;
   --sn-success-soft:   rgba(34, 197, 94, 0.12);
@@ -174,15 +174,15 @@
   --sn-text-muted:     #94A3B8;
   --sn-text-dim:       #64748B;
 
-  --sn-border-faint:   rgba(148, 163, 184, 0.10);
-  --sn-border-soft:    rgba(148, 163, 184, 0.18);
-  --sn-border-strong:  rgba(148, 163, 184, 0.32);
-  --sn-border-glow:    rgba(56, 189, 248, 0.40);
+  --sn-border-faint:   rgba(148, 163, 184, 0.12);
+  --sn-border-soft:    rgba(148, 163, 184, 0.22);
+  --sn-border-strong:  rgba(148, 163, 184, 0.38);
+  --sn-border-glow:    rgba(34, 211, 238, 0.52);
 
   --sn-shadow-sm:      0 1px 2px rgba(0, 0, 0, 0.30);
-  --sn-shadow-md:      0 8px 24px rgba(0, 0, 0, 0.35);
-  --sn-shadow-lg:      0 24px 48px -12px rgba(0, 0, 0, 0.55);
-  --sn-shadow-glow:    0 0 0 1px rgba(56, 189, 248, 0.35), 0 8px 30px rgba(56, 189, 248, 0.18);
+  --sn-shadow-md:      0 14px 34px rgba(0, 0, 0, 0.42);
+  --sn-shadow-lg:      0 30px 64px -14px rgba(0, 0, 0, 0.68);
+  --sn-shadow-glow:    0 0 0 1px rgba(34, 211, 238, 0.42), 0 12px 36px rgba(34, 211, 238, 0.22);
   --sn-shadow-crit:    0 0 0 1px rgba(239, 68, 68, 0.35), 0 8px 30px rgba(239, 68, 68, 0.18);
   --sn-shadow-elite:   0 0 0 1px rgba(224, 180, 90, 0.40), 0 8px 30px rgba(224, 180, 90, 0.18);
 

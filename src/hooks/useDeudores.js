@@ -1,19 +1,21 @@
 import { useMemo } from 'react';
 import { useAlumnos } from './useAlumnos';
-import { useQuery, invalidate } from './useFirestoreCache';
+import { useQuery, invalidatePrefix } from './useFirestoreCache';
 import { deudasService } from '../services/deudasService';
 import { PRECIO_MENSUALIDAD, formatDateLima } from '../config/businessRules';
 
 export const useDeudasDeAlumno = (alumnoId) => {
-  const q = useQuery(`deudas:alumno:${alumnoId}`, () => deudasService.porAlumno(alumnoId), [alumnoId]);
+  const q = useQuery(`deudas:alumno:${alumnoId ?? 'none'}`, () => (
+    alumnoId ? deudasService.porAlumno(alumnoId) : Promise.resolve([])
+  ), [alumnoId]);
   return { deudas: q.data ?? [], loading: q.loading, error: q.error };
 };
 
 export const mutarDeudas = {
-  crear:        async (data) => { const r = await deudasService.crear(data); invalidate('deudas:pendientes'); return r; },
-  marcarPagada: async (id) => { const r = await deudasService.marcarPagada(id); invalidate('deudas:pendientes'); return r; },
-  reabrir:      async (id) => { const r = await deudasService.reabrir(id); invalidate('deudas:pendientes'); return r; },
-  eliminar:     async (id) => { const r = await deudasService.eliminar(id); invalidate('deudas:pendientes'); return r; },
+  crear:        async (data) => { const r = await deudasService.crear(data); invalidatePrefix('deudas'); return r; },
+  marcarPagada: async (id) => { const r = await deudasService.marcarPagada(id); invalidatePrefix('deudas'); return r; },
+  reabrir:      async (id) => { const r = await deudasService.reabrir(id); invalidatePrefix('deudas'); return r; },
+  eliminar:     async (id) => { const r = await deudasService.eliminar(id); invalidatePrefix('deudas'); return r; },
 };
 
 /**

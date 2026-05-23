@@ -14,6 +14,21 @@ export const invalidate = (key) => {
   subscribers.get(key)?.forEach((setter) => setter((n) => n + 1));
 };
 
+const matchesPrefix = (key, prefix) => key === prefix || key.startsWith(`${prefix}:`);
+
+const knownKeys = () => new Set([...cache.keys(), ...subscribers.keys()]);
+
+export const invalidatePrefix = (prefix) => {
+  knownKeys().forEach((key) => {
+    if (!matchesPrefix(key, prefix)) return;
+    invalidate(key);
+  });
+};
+
+export const invalidateMany = (keysOrPrefixes = []) => {
+  keysOrPrefixes.forEach((key) => invalidatePrefix(key));
+};
+
 export const invalidateAll = () => {
   cache.clear();
   subscribers.forEach((set) => set.forEach((setter) => setter((n) => n + 1)));

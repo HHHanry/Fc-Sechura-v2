@@ -6,3 +6,8 @@ export { performanceService } from './performanceService';
 export { usuariosService }    from './usuariosService';
 export { tacticasService }    from './tacticasService';
 export { convocatoriasService } from './convocatoriasService';
+
+// === Fases 2-8 (estructura preparada, sin UI todavía) ===
+export { misionesService }      from './misionesService';
+export { competenciasService }  from './competenciasService';
+export { auditoriaService }     from './auditoriaService';

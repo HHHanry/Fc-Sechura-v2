@@ -20,6 +20,13 @@ const mesesOptions = [
   })),
 ];
 
+const escapeHtml = (value = '') => String(value)
+  .replace(/&/g, '&amp;')
+  .replace(/</g, '&lt;')
+  .replace(/>/g, '&gt;')
+  .replace(/"/g, '&quot;')
+  .replace(/'/g, '&#039;');
+
 const VerPagos = () => {
   const { alumnos } = useAlumnos();
   const { pagos: rawPagos, loading } = usePagos();
@@ -133,10 +140,10 @@ const VerPagos = () => {
 
   const exportarExcel = () => {
     const html = `<html><head><meta charset="utf-8"></head><body>
-      <h2>Auditoría de Caja · FC Sechura · ${filtroMes}</h2>
+      <h2>Auditoría de Caja · FC Sechura · ${escapeHtml(filtroMes)}</h2>
       <table border="1" cellpadding="6" cellspacing="0">
         <thead><tr><th>RECIBO</th><th>FECHA</th><th>ALUMNO</th><th>DNI</th><th>CONCEPTO</th><th>MÉTODO</th><th>MONTO</th><th>ESTADO</th></tr></thead>
-        <tbody>${visibles.map((p) => `<tr><td>${p.id}</td><td>${p.fecha}</td><td>${p.alumno}</td><td>${p.dni}</td><td>${p.concepto}</td><td>${p.metodo}</td><td>${p.monto.toFixed(2)}</td><td>${p.estado}</td></tr>`).join('')}
+        <tbody>${visibles.map((p) => `<tr><td>${escapeHtml(p.id)}</td><td>${escapeHtml(p.fecha)}</td><td>${escapeHtml(p.alumno)}</td><td>${escapeHtml(p.dni)}</td><td>${escapeHtml(p.concepto)}</td><td>${escapeHtml(p.metodo)}</td><td>${p.monto.toFixed(2)}</td><td>${escapeHtml(p.estado)}</td></tr>`).join('')}
         <tr><td colspan="6" style="text-align:right;font-weight:bold">TOTAL RECAUDADO</td><td style="font-weight:bold">${totalRecaudado.toFixed(2)}</td><td></td></tr>
         </tbody></table></body></html>`;
     const blob = new Blob([html], { type: 'application/vnd.ms-excel' });
@@ -148,16 +155,16 @@ const VerPagos = () => {
   };
 
   const exportarPDF = () => {
-    const w = window.open('', '_blank');
+    const w = window.open('', '_blank', 'noopener,noreferrer');
     if (!w) return;
     const filas = visibles.map((p) => {
       const tono = p.estado === 'Completado' ? 'success' : p.estado === 'Anulado' ? 'danger' : '';
       const estilo = p.estado === 'Anulado' ? 'style="text-decoration:line-through;opacity:0.6"' : '';
       return `<tr ${estilo}>
-        <td><strong>${p.id}</strong></td><td>${p.fecha}</td><td>${p.alumno}</td>
-        <td>${p.dni}</td><td>${p.concepto}</td><td>${p.metodo}</td>
+        <td><strong>${escapeHtml(p.id)}</strong></td><td>${escapeHtml(p.fecha)}</td><td>${escapeHtml(p.alumno)}</td>
+        <td>${escapeHtml(p.dni)}</td><td>${escapeHtml(p.concepto)}</td><td>${escapeHtml(p.metodo)}</td>
         <td class="r"><strong>${formatMoney(p.monto)}</strong></td>
-        <td class="c ${tono}">${p.estado}</td>
+        <td class="c ${tono}">${escapeHtml(p.estado)}</td>
       </tr>`;
     }).join('');
     w.document.write(`<html><head><title>Auditoría · FC Sechura</title>
@@ -176,7 +183,7 @@ const VerPagos = () => {
       </style></head><body>
         <div class="h">
           <div><h1>Auditoría de caja y pagos</h1>
-            <p style="margin:4px 0 0;color:#64748b">Periodo: ${filtroMes} · Categoría: ${filtroCategoria} · Estado: ${filtroEstado}</p>
+            <p style="margin:4px 0 0;color:#64748b">Periodo: ${escapeHtml(filtroMes)} · Categoría: ${escapeHtml(filtroCategoria)} · Estado: ${escapeHtml(filtroEstado)}</p>
           </div>
           <div style="text-align:right">
             <h2 style="margin:0;color:#1e3a8a">${formatMoney(totalRecaudado)}</h2>
@@ -396,7 +403,7 @@ const VerPagos = () => {
 const imprimirRecibo = () => {
   const el = document.getElementById('sn-recibo-print');
   if (!el) return;
-  const w = window.open('', '_blank');
+  const w = window.open('', '_blank', 'noopener,noreferrer');
   if (!w) return;
   w.document.write(`<html><head><title>Recibo FC Sechura</title>
     <style>

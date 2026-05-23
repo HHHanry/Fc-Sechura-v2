@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 import { useAlumnos } from '../hooks/useAlumnos';
 import { useUltimosPagos, usePagosDelMes } from '../hooks/usePagos';
 import { useAsistenciaHoy } from '../hooks/useAsistencia';
@@ -180,10 +180,10 @@ const SectionHeader = ({ eyebrow, title }) => (
 );
 
 const Hero = ({ user, hoyDmy }) => (
-  <div style={heroStyle}>
+  <div className="sn-dashboard-hero" style={heroStyle}>
     <div style={heroBgStyle} aria-hidden />
     <div style={heroOverlayStyle} aria-hidden />
-    <div style={heroContentStyle}>
+    <div className="sn-dashboard-hero-content" style={heroContentStyle}>
       <span style={{ fontSize: 'var(--sn-fs-xs)', fontWeight: 800, letterSpacing: 'var(--sn-tracking-mega)', color: 'var(--sn-brand-glow)' }}>
         CENTRO DE MANDO · {hoyDmy}
       </span>
@@ -194,7 +194,7 @@ const Hero = ({ user, hoyDmy }) => (
         Esta es la radiografía operativa de la academia: alumnos, asistencia, finanzas y rendimiento. Un solo lugar para tomar decisiones rápidas.
       </p>
     </div>
-    <div style={heroQuoteStyle}>
+    <div className="sn-dashboard-hero-quote" style={heroQuoteStyle}>
       "Nuestra pasión marca la diferencia."
       <span style={heroQuoteAuthorStyle}>— FC Sechura</span>
     </div>
@@ -529,6 +529,15 @@ const rankBadgeStyle = {
 const styleSheet = `
   @media (max-width: 991.98px) {
     .sn-dashboard-grid { grid-template-columns: 1fr !important; }
+  }
+  @media (max-width: 640px) {
+    .sn-dashboard-hero { min-height: 240px !important; }
+    .sn-dashboard-hero-content { padding: var(--sn-space-5) var(--sn-space-4) !important; }
+    .sn-dashboard-hero-quote {
+      max-width: calc(100% - 1rem) !important;
+      margin: var(--sn-space-3) !important;
+      font-size: var(--sn-fs-xs) !important;
+    }
   }
 `;
 

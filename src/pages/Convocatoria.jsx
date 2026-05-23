@@ -70,7 +70,7 @@ const Convocatoria = () => {
       });
       msg += `\n🔥 ¡A dejarlo todo en la cancha! Se exige puntualidad.`;
 
-      window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+      window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
 
       toast.success('Convocatoria guardada y enviada.');
       setSeleccionados([]);

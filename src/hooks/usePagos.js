@@ -1,4 +1,4 @@
-import { useQuery, invalidate } from './useFirestoreCache';
+import { useQuery, invalidatePrefix } from './useFirestoreCache';
 import { pagosService } from '../services/pagosService';
 
 const KEY = 'pagos';
@@ -19,13 +19,15 @@ export const usePagosDelMes = (yyyymm) => {
 };
 
 export const usePagosDeAlumno = (alumnoId) => {
-  const q = useQuery(`${KEY}:alumno:${alumnoId}`, () => pagosService.porAlumno(alumnoId), [alumnoId]);
+  const q = useQuery(`${KEY}:alumno:${alumnoId ?? 'none'}`, () => (
+    alumnoId ? pagosService.porAlumno(alumnoId) : Promise.resolve([])
+  ), [alumnoId]);
   return { pagos: q.data ?? [], loading: q.loading, error: q.error };
 };
 
 export const mutarPagos = {
-  registrar:  async (data) => { const r = await pagosService.registrar(data); invalidate(KEY); return r; },
-  actualizar: async (id, data) => { const r = await pagosService.actualizar(id, data); invalidate(KEY); return r; },
-  anular:     async (id) => { const r = await pagosService.anular(id);        invalidate(KEY); return r; },
-  eliminar:   async (id) => { const r = await pagosService.eliminar(id);      invalidate(KEY); return r; },
+  registrar:  async (data) => { const r = await pagosService.registrar(data); invalidatePrefix(KEY); return r; },
+  actualizar: async (id, data) => { const r = await pagosService.actualizar(id, data); invalidatePrefix(KEY); return r; },
+  anular:     async (id) => { const r = await pagosService.anular(id);        invalidatePrefix(KEY); return r; },
+  eliminar:   async (id) => { const r = await pagosService.eliminar(id);      invalidatePrefix(KEY); return r; },
 };

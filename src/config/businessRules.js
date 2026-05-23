@@ -81,3 +81,165 @@ export const formatDateLima = (date = new Date()) => {
   const get = (t) => parts.find((p) => p.type === t).value;
   return { iso: `${get('year')}-${get('month')}-${get('day')}`, dmy: `${get('day')}/${get('month')}/${get('year')}` };
 };
+
+/* =============================================================
+   FASE 2 — Misiones del jugador
+   ============================================================= */
+export const MISION_AREAS = Object.freeze({
+  TECNICA: 'tecnica',
+  FISICA:  'fisica',
+  TACTICA: 'tactica',
+  MENTAL:  'mental',
+});
+
+export const MISION_AREAS_LIST = [
+  { value: MISION_AREAS.TECNICA, label: 'Técnica' },
+  { value: MISION_AREAS.FISICA,  label: 'Física' },
+  { value: MISION_AREAS.TACTICA, label: 'Táctica' },
+  { value: MISION_AREAS.MENTAL,  label: 'Mental' },
+];
+
+export const MISION_ESTADOS = Object.freeze({
+  NO_LOGRADO: 'no_logrado',
+  EN_PROCESO: 'en_proceso',
+  LOGRADO:    'logrado',
+  DESTACADO:  'destacado',
+});
+
+export const MISION_ESTADOS_LIST = [
+  { value: MISION_ESTADOS.NO_LOGRADO, label: 'No logrado', color: 'var(--sn-text-muted)' },
+  { value: MISION_ESTADOS.EN_PROCESO, label: 'En proceso', color: 'var(--sn-warn)' },
+  { value: MISION_ESTADOS.LOGRADO,    label: 'Logrado',    color: 'var(--sn-success)' },
+  { value: MISION_ESTADOS.DESTACADO,  label: 'Destacado',  color: 'var(--sn-tier-elite)' },
+];
+
+export const MISIONES_SUGERIDAS = [
+  'Recibir perfilado antes de girar',
+  'Levantar la cabeza antes del pase',
+  'Presionar 3 segundos tras pérdida',
+  'Usar pierna izquierda',
+  'Máximo 2 toques',
+  'Buscar tercer hombre',
+  'Marcar al hombre en saques de esquina',
+];
+
+/* =============================================================
+   FASE 3 — Competencias por posición
+   ============================================================= */
+export const POSICIONES = Object.freeze({
+  PORTERO:   'portero',
+  DEFENSA:   'defensa',
+  VOLANTE:   'volante',
+  DELANTERO: 'delantero',
+});
+
+export const COMPETENCIAS_POR_POSICION = {
+  [POSICIONES.PORTERO]:   ['Salida del arco', 'Reflejos', 'Juego aéreo', 'Pase con pie'],
+  [POSICIONES.DEFENSA]:   ['Marca', 'Cobertura', 'Duelo individual', 'Salida limpia'],
+  [POSICIONES.VOLANTE]:   ['Orientación', 'Pase corto/largo', 'Presión', 'Visión de juego'],
+  [POSICIONES.DELANTERO]: ['Definición', 'Desmarque', 'Primer control', 'Presión'],
+};
+
+export const NIVELES_COMPETENCIA = [
+  { value: 1, label: 'Básico',         color: 'var(--sn-tier-bronze)' },
+  { value: 2, label: 'En desarrollo',  color: 'var(--sn-info)' },
+  { value: 3, label: 'Competitivo',    color: 'var(--sn-tier-gold)' },
+  { value: 4, label: 'Destacado',      color: 'var(--sn-tier-elite)' },
+];
+
+/* =============================================================
+   FASE 4 — Cantera y proyección
+   ============================================================= */
+export const POTENCIAL = [
+  { value: 'bajo',  label: 'Bajo',  color: 'var(--sn-text-dim)' },
+  { value: 'medio', label: 'Medio', color: 'var(--sn-info)' },
+  { value: 'alto',  label: 'Alto',  color: 'var(--sn-success)' },
+  { value: 'elite', label: 'Élite', color: 'var(--sn-tier-elite)' },
+];
+
+export const ALERTAS_CANTERA = [
+  'Domina su categoría',
+  'Probar en categoría superior',
+  'Requiere seguimiento técnico',
+  'Promesa observada',
+];
+
+/* =============================================================
+   FASE 5 — Expediente deportivo vivo (alumno)
+   ============================================================= */
+export const ESTADOS_ALUMNO = [
+  { value: 'activo',     label: 'Activo',     color: 'var(--sn-success)' },
+  { value: 'observado',  label: 'Observado',  color: 'var(--sn-info)' },
+  { value: 'lesionado',  label: 'Lesionado',  color: 'var(--sn-crit)' },
+  { value: 'moroso',     label: 'Moroso',     color: 'var(--sn-warn)' },
+  { value: 'becado',     label: 'Becado',     color: 'var(--sn-tier-elite)' },
+  { value: 'prueba',     label: 'En prueba',  color: 'var(--sn-text-muted)' },
+  { value: 'retirado',   label: 'Retirado',   color: 'var(--sn-text-dim)' },
+];
+
+export const ETIQUETAS_ALUMNO_SUGERIDAS = [
+  'Zurdo',
+  'Rápido',
+  'Potencial alto',
+  'Baja asistencia',
+  'Requiere seguimiento',
+  'Capitán',
+  'Disciplinado',
+];
+
+export const TIPOS_CONTACTO_FAMILIAR = [
+  { value: 'padre',      label: 'Padre' },
+  { value: 'madre',      label: 'Madre' },
+  { value: 'apoderado',  label: 'Apoderado' },
+  { value: 'emergencia', label: 'Emergencia' },
+];
+
+/* =============================================================
+   FASE 7 — Convocatoria profesional
+   ============================================================= */
+export const DISPONIBILIDAD_CONVOCATORIA = [
+  { value: 'disponible',         label: 'Disponible',          color: 'var(--sn-success)' },
+  { value: 'lesionado',          label: 'Lesionado',           color: 'var(--sn-crit)' },
+  { value: 'deuda',              label: 'Deuda pendiente',     color: 'var(--sn-warn)' },
+  { value: 'permiso_pendiente',  label: 'Permiso pendiente',   color: 'var(--sn-info)' },
+];
+
+export const MOTIVOS_NO_CONVOCADO = [
+  'Lesión',
+  'Decisión técnica',
+  'Falta',
+  'Disciplina',
+];
+
+export const CHECKLIST_CONVOCATORIA = [
+  'DNI',
+  'Uniforme',
+  'Hidratación',
+  'Movilidad',
+  'Autorización',
+];
+
+/* =============================================================
+   FASE 8 — Gestión de usuarios / permisos
+   ============================================================= */
+export const ESTADOS_USUARIO = [
+  { value: 'activo',     label: 'Activo',     color: 'var(--sn-success)' },
+  { value: 'suspendido', label: 'Suspendido', color: 'var(--sn-crit)' },
+];
+
+export const PERMISOS_FINOS = [
+  { value: 'pagos.ver',     label: 'Ver pagos' },
+  { value: 'pagos.editar',  label: 'Editar pagos' },
+  { value: 'pagos.anular',  label: 'Anular pagos' },
+  { value: 'alumnos.editar',label: 'Editar alumnos' },
+  { value: 'reportes.ver',  label: 'Ver reportes' },
+];
+
+export const ACCIONES_AUDITABLES = Object.freeze({
+  ANULAR_RECIBO:   'anular_recibo',
+  ELIMINAR_ALUMNO: 'eliminar_alumno',
+  REVOCAR_USUARIO: 'revocar_usuario',
+  EDITAR_PAGO:     'editar_pago',
+  CREAR_USUARIO:   'crear_usuario',
+  EDITAR_USUARIO:  'editar_usuario',
+});

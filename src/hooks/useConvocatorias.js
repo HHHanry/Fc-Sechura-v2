@@ -1,4 +1,4 @@
-import { useQuery, invalidate } from './useFirestoreCache';
+import { useQuery, invalidatePrefix } from './useFirestoreCache';
 import { convocatoriasService } from '../services/convocatoriasService';
 
 const KEY = 'convocatorias';
@@ -9,6 +9,6 @@ export const useConvocatorias = (n = 20) => {
 };
 
 export const mutarConvocatorias = {
-  crear:      async (data) => { const r = await convocatoriasService.crear(data); invalidate(`${KEY}:20`); return r; },
-  actualizar: async (id, data) => { const r = await convocatoriasService.actualizar(id, data); invalidate(`${KEY}:20`); return r; },
+  crear:      async (data) => { const r = await convocatoriasService.crear(data); invalidatePrefix(KEY); return r; },
+  actualizar: async (id, data) => { const r = await convocatoriasService.actualizar(id, data); invalidatePrefix(KEY); return r; },
 };

@@ -5,7 +5,7 @@ const FRENTE_ID  = 'sn-carnet-frente';
 const REVERSO_ID = 'sn-carnet-reverso';
 
 const imprimirCR80 = () => {
-  const v = window.open('', '_blank');
+  const v = window.open('', '_blank', 'noopener,noreferrer');
   if (!v) return;
   const frente  = document.getElementById(FRENTE_ID)?.innerHTML ?? '';
   const reverso = document.getElementById(REVERSO_ID)?.innerHTML ?? '';

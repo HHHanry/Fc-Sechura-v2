@@ -1,16 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
 import logo from '../assets/logo.png';
 import { Button } from '../components/ui';
 import { toast } from '../hooks/useToast';
+import { useAuth } from '../context/useAuth';
 
 const Login = () => {
   const [credenciales, setCredenciales] = useState({ email: '', password: '' });
   const [cargando, setCargando] = useState(false);
   const [verPass, setVerPass] = useState(false);
   const navigate = useNavigate();
+  const { user } = useAuth();
+
+  // Auto-redirect a / cuando AuthProvider termina de cargar el perfil tras login
+  // (o cuando ya hay sesión activa al entrar a /login).
+  useEffect(() => {
+    if (user) navigate('/', { replace: true });
+  }, [user, navigate]);
 
   const handleChange = (e) => setCredenciales({ ...credenciales, [e.target.name]: e.target.value });
 
@@ -20,7 +28,7 @@ const Login = () => {
     try {
       await signInWithEmailAndPassword(auth, credenciales.email, credenciales.password);
       toast.success('Bienvenido al sistema.');
-      navigate('/');
+      // El redirect lo hace el useEffect cuando AuthProvider haya hidratado el user.
     } catch (err) {
       const msg = err.code === 'auth/invalid-credential'
         ? 'Correo o contraseña incorrectos.'

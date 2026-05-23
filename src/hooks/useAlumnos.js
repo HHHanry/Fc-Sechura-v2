@@ -1,4 +1,4 @@
-import { useQuery, invalidate } from './useFirestoreCache';
+import { useQuery, invalidatePrefix } from './useFirestoreCache';
 import { alumnosService } from '../services/alumnosService';
 
 const KEY = 'alumnos';
@@ -14,14 +14,16 @@ export const useAlumnos = () => {
 };
 
 export const useAlumno = (id) => {
-  const q = useQuery(`${KEY}:${id}`, () => alumnosService.obtener(id), [id]);
+  const q = useQuery(`${KEY}:${id ?? 'none'}`, () => (
+    id ? alumnosService.obtener(id) : Promise.resolve(null)
+  ), [id]);
   return { alumno: q.data, loading: q.loading, error: q.error, refetch: q.refetch };
 };
 
 export const mutarAlumnos = {
   reservarId: () => alumnosService.reservarId(),
-  crear:      async (data) => { const r = await alumnosService.crear(data); invalidate(KEY); return r; },
-  crearConId: async (id, data) => { const r = await alumnosService.crearConId(id, data); invalidate(KEY); return r; },
-  actualizar: async (id, data) => { const r = await alumnosService.actualizar(id, data); invalidate(KEY); invalidate(`${KEY}:${id}`); return r; },
-  eliminar:   async (id) => { const r = await alumnosService.eliminar(id); invalidate(KEY); invalidate(`${KEY}:${id}`); return r; },
+  crear:      async (data) => { const r = await alumnosService.crear(data); invalidatePrefix(KEY); return r; },
+  crearConId: async (id, data) => { const r = await alumnosService.crearConId(id, data); invalidatePrefix(KEY); return r; },
+  actualizar: async (id, data) => { const r = await alumnosService.actualizar(id, data); invalidatePrefix(KEY); return r; },
+  eliminar:   async (id) => { const r = await alumnosService.eliminar(id); invalidatePrefix(KEY); return r; },
 };

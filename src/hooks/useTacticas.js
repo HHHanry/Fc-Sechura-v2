@@ -1,4 +1,4 @@
-import { useQuery, invalidate } from './useFirestoreCache';
+import { useQuery, invalidatePrefix } from './useFirestoreCache';
 import { tacticasService } from '../services/tacticasService';
 
 const KEY = 'tacticas';
@@ -9,6 +9,6 @@ export const useTacticas = () => {
 };
 
 export const mutarTacticas = {
-  guardar:  async (data) => { const r = await tacticasService.guardar(data); invalidate(KEY); return r; },
-  eliminar: async (id) => { const r = await tacticasService.eliminar(id); invalidate(KEY); return r; },
+  guardar:  async (data) => { const r = await tacticasService.guardar(data); invalidatePrefix(KEY); return r; },
+  eliminar: async (id) => { const r = await tacticasService.eliminar(id); invalidatePrefix(KEY); return r; },
 };

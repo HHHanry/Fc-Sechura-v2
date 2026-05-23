@@ -1,13 +1,17 @@
 import React, { useMemo, useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import FifaRadar from '../components/FifaRadar';
 import { Card, CardBody, Button, Badge, DataTable, EmptyState, Skeleton } from '../components/ui';
 import { usePagosDeAlumno } from '../hooks/usePagos';
 import { useAsistenciaDeAlumno } from '../hooks/useAsistencia';
 import { useDeudasDeAlumno } from '../hooks/useDeudores';
+import { useMisionesDeAlumno } from '../hooks/useMisiones';
 import { mutarAlumnos } from '../hooks/useAlumnos';
 import { toast } from '../hooks/useToast';
-import { PRECIO_MENSUALIDAD, formatMoney, formatDateLima, getPlayerTier, calculateOVR, STAT_KEYS } from '../config/businessRules';
+import {
+  PRECIO_MENSUALIDAD, formatMoney, formatDateLima, getPlayerTier, calculateOVR, STAT_KEYS,
+  MISION_ESTADOS, MISION_AREAS_LIST,
+} from '../config/businessRules';
 
 // function declarations para los iconos usados antes de su definición textual (TDZ-safe)
 function DocIcon() { return (<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9Z"/><path d="M14 3v6h6"/></svg>); }
@@ -44,33 +48,13 @@ const DetalleAlumno = () => {
     if (alumno?.medico) setDatosMedicos((prev) => ({ ...prev, ...alumno.medico }));
   }, [alumno?.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // === Pantalla de rescate (recargada con F5 sin state) ===
-  if (!alumno || !alumno.id) {
-    return (
-      <div style={pageBg}>
-        <div style={contentWrap}>
-          <Card>
-            <CardBody style={{ padding: 'var(--sn-space-7)', textAlign: 'center' }}>
-              <div style={rescateIconStyle}>?</div>
-              <h2 style={{ margin: '0 0 var(--sn-space-2)', fontFamily: 'var(--sn-font-display)', color: 'var(--sn-text-primary)' }}>Sesión no encontrada</h2>
-              <p style={{ color: 'var(--sn-text-muted)', marginBottom: 'var(--sn-space-5)' }}>
-                Recargaste la página y los datos temporales se limpiaron por seguridad.
-              </p>
-              <Button onClick={() => navigate('/alumnos')} icon={<ArrowLeftIcon />}>Volver al directorio</Button>
-            </CardBody>
-          </Card>
-        </div>
-      </div>
-    );
-  }
-
   // === Variables derivadas ===
-  const inicial = (alumno.nombre ?? '?').charAt(0).toUpperCase() + (alumno.apellido ?? '').charAt(0).toUpperCase();
-  const celular = String(alumno.celular ?? '').replace(/\D/g, '');
+  const inicial = (alumno?.nombre ?? '?').charAt(0).toUpperCase() + (alumno?.apellido ?? '').charAt(0).toUpperCase();
+  const celular = String(alumno?.celular ?? '').replace(/\D/g, '');
   const linkWhatsApp = celular.length >= 9 ? `https://wa.me/51${celular}` : null;
 
   const { iso: hoyIso } = formatDateLima();
-  const vencimiento = String(alumno.vencimientoMensualidad ?? '2000-01-01');
+  const vencimiento = String(alumno?.vencimientoMensualidad ?? '2000-01-01');
   const debeMes = hoyIso >= vencimiento;
   const diasAtraso = useMemo(() => {
     if (!debeMes) return 0;
@@ -112,11 +96,31 @@ const DetalleAlumno = () => {
   // === Stats reales del alumno (no hardcoded) ===
   const stats = useMemo(() => {
     const out = {};
-    STAT_KEYS.forEach((k) => { out[k] = Number(alumno[k]) || 0; });
+    STAT_KEYS.forEach((k) => { out[k] = Number(alumno?.[k]) || 0; });
     return out;
   }, [alumno]);
-  const ovr = alumno.ovr ?? calculateOVR(stats);
+  const ovr = alumno ? (alumno.ovr ?? calculateOVR(stats)) : 0;
   const tier = getPlayerTier(ovr);
+
+  // === Pantalla de rescate (recargada con F5 sin state) ===
+  if (!alumno || !alumno.id) {
+    return (
+      <div style={pageBg}>
+        <div style={contentWrap}>
+          <Card>
+            <CardBody style={{ padding: 'var(--sn-space-7)', textAlign: 'center' }}>
+              <div style={rescateIconStyle}>?</div>
+              <h2 style={{ margin: '0 0 var(--sn-space-2)', fontFamily: 'var(--sn-font-display)', color: 'var(--sn-text-primary)' }}>Sesión no encontrada</h2>
+              <p style={{ color: 'var(--sn-text-muted)', marginBottom: 'var(--sn-space-5)' }}>
+                Recargaste la página y los datos temporales se limpiaron por seguridad.
+              </p>
+              <Button onClick={() => navigate('/alumnos')} icon={<ArrowLeftIcon />}>Volver al directorio</Button>
+            </CardBody>
+          </Card>
+        </div>
+      </div>
+    );
+  }
 
   const guardarMedico = async () => {
     setGuardandoMedico(true);
@@ -161,6 +165,8 @@ const DetalleAlumno = () => {
                 </div>
               </CardBody>
             </Card>
+
+            <PlanVivoCard alumnoId={alumno.id} />
           </aside>
 
           {/* === Columna principal: tabs === */}
@@ -831,5 +837,104 @@ const rescateIconStyle = {
   fontSize: 36, fontWeight: 800,
   margin: '0 auto var(--sn-space-4)',
 };
+
+/* =====================================================
+   PlanVivoCard — Resumen Fase 2 dentro del expediente
+   ===================================================== */
+
+const PlanVivoCard = ({ alumnoId }) => {
+  const { misiones, loading } = useMisionesDeAlumno(alumnoId);
+
+  const activa = misiones.find(
+    (m) => m.estado === MISION_ESTADOS.EN_PROCESO || m.estado === MISION_ESTADOS.NO_LOGRADO,
+  );
+  const ultimaLograda = misiones.find(
+    (m) => m.estado === MISION_ESTADOS.LOGRADO || m.estado === MISION_ESTADOS.DESTACADO,
+  );
+  const conteoArea = {};
+  misiones.forEach((m) => { if (m.area) conteoArea[m.area] = (conteoArea[m.area] ?? 0) + 1; });
+  const areaTop = Object.entries(conteoArea).sort((a, b) => b[1] - a[1])[0]?.[0];
+  const areaTopLabel = MISION_AREAS_LIST.find((a) => a.value === areaTop)?.label;
+
+  return (
+    <Card>
+      <CardBody style={{ padding: 0 }}>
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          padding: 'var(--sn-space-4) var(--sn-space-5)',
+          borderBottom: '1px solid var(--sn-border-faint)',
+        }}>
+          <div>
+            <div style={{ fontSize: 'var(--sn-fs-xs)', fontWeight: 800, letterSpacing: 'var(--sn-tracking-mega)', color: 'var(--sn-brand-glow)', textTransform: 'uppercase' }}>
+              Plan vivo
+            </div>
+            <div style={{ fontFamily: 'var(--sn-font-display)', fontWeight: 700, color: 'var(--sn-text-primary)', fontSize: 'var(--sn-fs-md)' }}>
+              Misiones del jugador
+            </div>
+          </div>
+          <Link
+            to="/misiones"
+            state={{ alumno: { id: alumnoId } }}
+            style={{
+              padding: '0.4rem 0.75rem',
+              borderRadius: 'var(--sn-radius-pill)',
+              background: 'color-mix(in srgb, var(--sn-brand-glow) 12%, transparent)',
+              border: '1px solid var(--sn-border-glow)',
+              color: 'var(--sn-brand-glow)',
+              fontSize: 'var(--sn-fs-xs)', fontWeight: 700,
+              textDecoration: 'none', letterSpacing: 'var(--sn-tracking-wide)',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            Gestionar →
+          </Link>
+        </div>
+        <div style={{ padding: 'var(--sn-space-4) var(--sn-space-5)' }}>
+          {loading ? (
+            <Skeleton height={70} />
+          ) : misiones.length === 0 ? (
+            <EmptyState
+              title="Sin misiones"
+              description="Asígnale la primera misión desde la sección plan vivo."
+            />
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--sn-space-3)' }}>
+              {activa && (
+                <PlanRow
+                  label="Activa"
+                  tone="warn"
+                  texto={activa.descripcion}
+                />
+              )}
+              {ultimaLograda && (
+                <PlanRow
+                  label="Última lograda"
+                  tone="success"
+                  texto={ultimaLograda.descripcion}
+                />
+              )}
+              {areaTopLabel && (
+                <PlanRow
+                  label="Área más repetida"
+                  tone="brand"
+                  texto={areaTopLabel}
+                />
+              )}
+            </div>
+          )}
+        </div>
+      </CardBody>
+    </Card>
+  );
+};
+
+const PlanRow = ({ label, tone, texto }) => (
+  <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+    <Badge tone={tone}>{label}</Badge>
+    <div style={{ color: 'var(--sn-text-primary)', fontWeight: 600, fontSize: 'var(--sn-fs-sm)', lineHeight: 1.35 }}>
+      {texto}
+    </div>
+  </div>
+);
 
 export default DetalleAlumno;

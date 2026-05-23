@@ -6,4 +6,8 @@ export { toast, useToasts }                                     from './useToast
 export { useTheme }                                             from './useTheme';
 export { useTacticas, mutarTacticas }                           from './useTacticas';
 export { useConvocatorias, mutarConvocatorias }                 from './useConvocatorias';
-export { invalidate, invalidateAll }                            from './useFirestoreCache';
+export { invalidate, invalidatePrefix, invalidateMany, invalidateAll } from './useFirestoreCache';
+
+// === Fases 2-3 (estructura preparada) ===
+export { useMisionesDeAlumno, mutarMisiones }             from './useMisiones';
+export { useCompetenciasDeAlumno, mutarCompetencias }      from './useCompetencias';
