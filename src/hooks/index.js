@@ -11,3 +11,4 @@ export { invalidate, invalidatePrefix, invalidateMany, invalidateAll } from './u
 // === Fases 2-3 (estructura preparada) ===
 export { useMisionesDeAlumno, mutarMisiones }             from './useMisiones';
 export { useCompetenciasDeAlumno, mutarCompetencias }      from './useCompetencias';
+export { useCanteraDeAlumno, useCanteraAll, mutarCantera } from './useCantera';

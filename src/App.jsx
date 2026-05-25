@@ -20,6 +20,8 @@ import ScoutingPartidos from './pages/ScoutingPartidos';
 import PortalJugador from './pages/PortalJugador';
 import Convocatoria from './pages/Convocatoria';
 import MisionesJugador from './pages/MisionesJugador';
+import CompetenciasJugador from './pages/CompetenciasJugador';
+import CateraProyeccion from './pages/CateraProyeccion';
 
 const AppContent = () => {
   const location = useLocation();
@@ -110,6 +112,18 @@ const AppContent = () => {
           <Route path="/misiones" element={
             <ProtectedRoute allowedRoles={['admin', 'entrenador']}>
               <MisionesJugador />
+            </ProtectedRoute>
+          } />
+
+          <Route path="/competencias" element={
+            <ProtectedRoute allowedRoles={['admin', 'entrenador']}>
+              <CompetenciasJugador />
+            </ProtectedRoute>
+          } />
+
+          <Route path="/cantera" element={
+            <ProtectedRoute allowedRoles={['admin', 'entrenador']}>
+              <CateraProyeccion />
             </ProtectedRoute>
           } />
         </Routes>

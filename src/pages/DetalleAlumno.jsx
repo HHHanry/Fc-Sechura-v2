@@ -6,11 +6,15 @@ import { usePagosDeAlumno } from '../hooks/usePagos';
 import { useAsistenciaDeAlumno } from '../hooks/useAsistencia';
 import { useDeudasDeAlumno } from '../hooks/useDeudores';
 import { useMisionesDeAlumno } from '../hooks/useMisiones';
+import { useCompetenciasDeAlumno } from '../hooks/useCompetencias';
+import { useCanteraDeAlumno } from '../hooks/useCantera';
 import { mutarAlumnos } from '../hooks/useAlumnos';
 import { toast } from '../hooks/useToast';
 import {
   PRECIO_MENSUALIDAD, formatMoney, formatDateLima, getPlayerTier, calculateOVR, STAT_KEYS,
   MISION_ESTADOS, MISION_AREAS_LIST,
+  POSICIONES, COMPETENCIAS_POR_POSICION, NIVELES_COMPETENCIA,
+  POTENCIAL,
 } from '../config/businessRules';
 
 // function declarations para los iconos usados antes de su definición textual (TDZ-safe)
@@ -167,6 +171,8 @@ const DetalleAlumno = () => {
             </Card>
 
             <PlanVivoCard alumnoId={alumno.id} />
+            <CompetenciasCard alumnoId={alumno.id} />
+            <CanteraCard alumnoId={alumno.id} />
           </aside>
 
           {/* === Columna principal: tabs === */}
@@ -936,5 +942,178 @@ const PlanRow = ({ label, tone, texto }) => (
     </div>
   </div>
 );
+
+/* =====================================================
+   CompetenciasCard — Resumen Fase 3 dentro del expediente
+   ===================================================== */
+
+const POSICIONES_LABEL = {
+  [POSICIONES.PORTERO]: 'Portero',
+  [POSICIONES.DEFENSA]: 'Defensa',
+  [POSICIONES.VOLANTE]: 'Volante',
+  [POSICIONES.DELANTERO]: 'Delantero',
+};
+
+const CompetenciasCard = ({ alumnoId }) => {
+  const { competencias, loading } = useCompetenciasDeAlumno(alumnoId);
+
+  const resumen = useMemo(() => {
+    if (!competencias?.competencias) return null;
+    const pos = competencias.posicion;
+    const comps = COMPETENCIAS_POR_POSICION[pos] ?? [];
+    const vals = comps.map((c) => competencias.competencias[c] ?? 0).filter((v) => v > 0);
+    if (vals.length === 0) return null;
+    const avg = vals.reduce((a, b) => a + b, 0) / vals.length;
+    const nivel = NIVELES_COMPETENCIA.slice().reverse().find((n) => avg >= n.value) ?? NIVELES_COMPETENCIA[0];
+    const mejor = comps.reduce((best, c) =>
+      (competencias.competencias[c] ?? 0) > (competencias.competencias[best] ?? 0) ? c : best
+    , comps[0]);
+    return { pos, avg, nivel, mejor, mejorVal: competencias.competencias[mejor] ?? 0 };
+  }, [competencias]);
+
+  return (
+    <Card>
+      <CardBody style={{ padding: 0 }}>
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          padding: 'var(--sn-space-4) var(--sn-space-5)',
+          borderBottom: '1px solid var(--sn-border-faint)',
+        }}>
+          <div>
+            <div style={{ fontSize: 'var(--sn-fs-xs)', fontWeight: 800, letterSpacing: 'var(--sn-tracking-mega)', color: 'var(--sn-brand-glow)', textTransform: 'uppercase' }}>
+              Competencias
+            </div>
+            <div style={{ fontFamily: 'var(--sn-font-display)', fontWeight: 700, color: 'var(--sn-text-primary)', fontSize: 'var(--sn-fs-md)' }}>
+              Mapa por posición
+            </div>
+          </div>
+          <Link
+            to="/competencias"
+            state={{ alumno: { id: alumnoId } }}
+            style={{
+              padding: '0.4rem 0.75rem',
+              borderRadius: 'var(--sn-radius-pill)',
+              background: 'color-mix(in srgb, var(--sn-brand-glow) 12%, transparent)',
+              border: '1px solid var(--sn-border-glow)',
+              color: 'var(--sn-brand-glow)',
+              fontSize: 'var(--sn-fs-xs)', fontWeight: 700,
+              textDecoration: 'none', letterSpacing: 'var(--sn-tracking-wide)',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            Evaluar →
+          </Link>
+        </div>
+        <div style={{ padding: 'var(--sn-space-4) var(--sn-space-5)' }}>
+          {loading ? (
+            <Skeleton height={70} />
+          ) : !resumen ? (
+            <EmptyState
+              title="Sin evaluación"
+              description="Evalúa las competencias de este jugador desde la sección Competencias."
+            />
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--sn-space-3)' }}>
+              <PlanRow
+                label="Posición"
+                tone="brand"
+                texto={POSICIONES_LABEL[resumen.pos] ?? resumen.pos}
+              />
+              <PlanRow
+                label="Nivel global"
+                tone={resumen.avg >= 3.5 ? 'elite' : resumen.avg >= 2.5 ? 'success' : 'info'}
+                texto={`${resumen.nivel.label} (${resumen.avg.toFixed(1)})`}
+              />
+              <PlanRow
+                label="Mejor competencia"
+                tone="elite"
+                texto={`${resumen.mejor} (${resumen.mejorVal}/4)`}
+              />
+            </div>
+          )}
+        </div>
+      </CardBody>
+    </Card>
+  );
+};
+
+/* =====================================================
+   CanteraCard — Resumen Fase 4 dentro del expediente
+   ===================================================== */
+
+const CanteraCard = ({ alumnoId }) => {
+  const { cantera, loading } = useCanteraDeAlumno(alumnoId);
+
+  const potInfo = cantera ? POTENCIAL.find((p) => p.value === cantera.potencial) : null;
+
+  return (
+    <Card>
+      <CardBody style={{ padding: 0 }}>
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          padding: 'var(--sn-space-4) var(--sn-space-5)',
+          borderBottom: '1px solid var(--sn-border-faint)',
+        }}>
+          <div>
+            <div style={{ fontSize: 'var(--sn-fs-xs)', fontWeight: 800, letterSpacing: 'var(--sn-tracking-mega)', color: 'var(--sn-brand-glow)', textTransform: 'uppercase' }}>
+              Cantera
+            </div>
+            <div style={{ fontFamily: 'var(--sn-font-display)', fontWeight: 700, color: 'var(--sn-text-primary)', fontSize: 'var(--sn-fs-md)' }}>
+              Proyección
+            </div>
+          </div>
+          <Link
+            to="/cantera"
+            state={{ alumno: { id: alumnoId } }}
+            style={{
+              padding: '0.4rem 0.75rem',
+              borderRadius: 'var(--sn-radius-pill)',
+              background: 'color-mix(in srgb, var(--sn-brand-glow) 12%, transparent)',
+              border: '1px solid var(--sn-border-glow)',
+              color: 'var(--sn-brand-glow)',
+              fontSize: 'var(--sn-fs-xs)', fontWeight: 700,
+              textDecoration: 'none', letterSpacing: 'var(--sn-tracking-wide)',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            Evaluar →
+          </Link>
+        </div>
+        <div style={{ padding: 'var(--sn-space-4) var(--sn-space-5)' }}>
+          {loading ? (
+            <Skeleton height={70} />
+          ) : !cantera ? (
+            <EmptyState
+              title="Sin evaluación"
+              description="Evalúa el potencial de este jugador desde la sección Cantera."
+            />
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--sn-space-3)' }}>
+              {potInfo && (
+                <PlanRow
+                  label="Potencial"
+                  tone={cantera.potencial === 'elite' ? 'elite' : cantera.potencial === 'alto' ? 'success' : 'info'}
+                  texto={potInfo.label}
+                />
+              )}
+              {cantera.alertas?.length > 0 && (
+                <PlanRow
+                  label="Alertas"
+                  tone="warn"
+                  texto={cantera.alertas.join(', ')}
+                />
+              )}
+              {cantera.notas && (
+                <div style={{ fontSize: 'var(--sn-fs-xs)', color: 'var(--sn-text-muted)', fontStyle: 'italic' }}>
+                  "{cantera.notas.length > 80 ? cantera.notas.slice(0, 80) + '…' : cantera.notas}"
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </CardBody>
+    </Card>
+  );
+};
 
 export default DetalleAlumno;

@@ -46,7 +46,9 @@ const buildNavGroups = (rol) => {
         { to: '/pizarra',      label: 'Pizarra',      hint: 'Tactica táctil' },
         { to: '/convocatoria', label: 'Convocatoria', hint: 'Alineación' },
         { to: '/scouting',     label: 'Scouting',     hint: 'Próximos partidos' },
-        { to: '/misiones',     label: 'Plan vivo',    hint: 'Misiones del jugador' },
+        { to: '/misiones',      label: 'Plan vivo',      hint: 'Misiones del jugador' },
+        { to: '/competencias', label: 'Competencias', hint: 'Mapa por posición' },
+        { to: '/cantera',      label: 'Cantera',      hint: 'Proyección y potencial' },
       ],
     });
   }

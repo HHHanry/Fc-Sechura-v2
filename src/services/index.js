@@ -11,3 +11,4 @@ export { convocatoriasService } from './convocatoriasService';
 export { misionesService }      from './misionesService';
 export { competenciasService }  from './competenciasService';
 export { auditoriaService }     from './auditoriaService';
+export { canteraService }       from './canteraService';

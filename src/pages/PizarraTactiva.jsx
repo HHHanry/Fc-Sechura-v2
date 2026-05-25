@@ -320,22 +320,62 @@ const PizarraTactiva = () => {
 
             <div ref={fullscreenWrapperRef} style={{
               ...lienzoWrapStyle,
-              ...(isFullscreen ? { background: 'var(--sn-bg-base)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0 } : {}),
+              ...(isFullscreen ? { background: 'var(--sn-bg-base)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 'var(--sn-space-3)' } : {}),
             }}>
               {isFullscreen && (
-                <>
-                  <button onClick={toggleFullscreen} style={fsCloseBtnStyle} title="Salir (ESC)">×</button>
-                  <div style={fsToolsStyle}>
-                    <Button size="sm" variant={tool === 'move'  ? 'primary' : 'secondary'} onClick={() => setTool('move')}>Mover</Button>
-                    <Button size="sm" variant={tool === 'line'  ? 'primary' : 'secondary'} onClick={() => setTool('line')}>Línea</Button>
-                    <Button size="sm" variant={tool === 'arrow' ? 'primary' : 'secondary'} onClick={() => setTool('arrow')}>Flecha</Button>
-                    <Button size="sm" variant={tool === 'free'  ? 'primary' : 'secondary'} onClick={() => setTool('free')}>Libre</Button>
-                    <Button size="sm" variant="ghost" onClick={() => setAwayVisible((v) => !v)} disabled={away.length === 0}>
-                      {awayVisible ? 'Ocultar rival' : 'Mostrar rival'}
-                    </Button>
-                    <Button size="sm" variant="ghost" onClick={undoStroke} disabled={strokes.length === 0}>Borrar último</Button>
+                <div className="sn-pizarra-fs-toolbar">
+                  <div className="sn-pizarra-toolbar-group">
+                    <ToolBtn icon={<HandIcon />}  label="Mover"   active={tool === 'move'}    onClick={() => setTool('move')} />
+                    <ToolBtn icon={<LineIcon />}  label="Línea"   active={tool === 'line'}    onClick={() => setTool('line')} />
+                    <ToolBtn icon={<ArrowIcon />} label="Flecha"  active={tool === 'arrow'}   onClick={() => setTool('arrow')} />
+                    <ToolBtn icon={<PenIcon />}   label="Libre"   active={tool === 'free'}    onClick={() => setTool('free')} />
+                    <ToolBtn icon={<LinkIcon />}  label="Asignar" active={tool === 'asignar'} onClick={() => setTool('asignar')} />
                   </div>
-                </>
+
+                  <div className="sn-pizarra-toolbar-divider" />
+
+                  <div className="sn-pizarra-toolbar-group" aria-label="Color de trazo">
+                    {TRAZO_COLORS.map((c) => (
+                      <button
+                        key={c} type="button"
+                        aria-label={`Color ${c}`}
+                        onClick={() => setTrazoColor(c)}
+                        className={`sn-pizarra-color-swatch sn-focusable ${trazoColor === c ? 'is-active' : ''}`}
+                        style={{ background: c }}
+                      />
+                    ))}
+                  </div>
+
+                  <div className="sn-pizarra-toolbar-divider" />
+
+                  <div className="sn-pizarra-toolbar-group">
+                    <ToolBtn icon={<UndoIcon />}  label="Deshacer" onClick={undoStroke}   disabled={strokes.length === 0} iconOnly />
+                    <ToolBtn icon={<TrashIcon />} label="Limpiar"  onClick={clearStrokes} disabled={strokes.length === 0} iconOnly />
+                  </div>
+
+                  <div className="sn-pizarra-toolbar-divider" />
+
+                  <div className="sn-pizarra-toolbar-group">
+                    <ToolBtn
+                      icon={awayVisible ? <EyeOffIcon /> : <EyeIcon />}
+                      label={awayVisible ? 'Ocultar rival' : 'Mostrar rival'}
+                      onClick={() => setAwayVisible((v) => !v)} disabled={away.length === 0}
+                    />
+                  </div>
+
+                  <div style={{ marginLeft: 'auto' }} />
+
+                  <button
+                    type="button"
+                    onClick={toggleFullscreen}
+                    className="sn-pizarra-fs-close sn-focusable"
+                    title="Salir de pantalla completa (ESC)"
+                    aria-label="Salir de pantalla completa"
+                  >
+                    <ExitFsIcon />
+                    <span className="label">Salir</span>
+                  </button>
+                </div>
               )}
 
               <div
@@ -648,9 +688,49 @@ const PizarraTactiva = () => {
           box-shadow: 0 0 0 2px var(--sn-bg-surface), 0 0 0 4px var(--sn-text-primary);
         }
 
+        /* ====== FULLSCREEN TOOLBAR ====== */
+        .sn-pizarra-fs-toolbar {
+          display: flex; align-items: center; gap: 6px;
+          padding: 6px;
+          background: color-mix(in srgb, var(--sn-bg-surface) 92%, transparent);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          border: 1px solid var(--sn-border-soft);
+          border-radius: var(--sn-radius-md);
+          box-shadow: var(--sn-shadow-lg);
+          width: 100%;
+          max-width: 820px;
+          margin-bottom: var(--sn-space-3);
+          overflow-x: auto;
+          overflow-y: hidden;
+          scrollbar-width: thin;
+          -webkit-overflow-scrolling: touch;
+          z-index: 9999;
+          flex-shrink: 0;
+        }
+        .sn-pizarra-fs-close {
+          display: inline-flex; align-items: center; gap: 6px;
+          padding: 8px 14px; min-height: 40px;
+          border-radius: var(--sn-radius-sm);
+          background: var(--sn-crit);
+          border: none;
+          color: white;
+          font-family: var(--sn-font-ui); font-weight: 700;
+          font-size: var(--sn-fs-xs);
+          letter-spacing: 0.04em;
+          cursor: pointer;
+          white-space: nowrap;
+          flex-shrink: 0;
+          transition: background var(--sn-dur-fast) var(--sn-ease), transform var(--sn-dur-fast) var(--sn-ease);
+        }
+        .sn-pizarra-fs-close:hover { filter: brightness(1.15); }
+        .sn-pizarra-fs-close:active { transform: scale(0.96); }
+
         @media (max-width: 640px) {
           .sn-pizarra-tool-btn span.label { display: none; }
           .sn-pizarra-tool-btn { padding: 8px; min-width: 40px; justify-content: center; }
+          .sn-pizarra-fs-close span.label { display: none; }
+          .sn-pizarra-fs-close { padding: 8px; }
         }
       `}</style>
     </div>
@@ -968,6 +1048,7 @@ const ArrowIcon  = () => (<svg width="14" height="14" viewBox="0 0 24 24" fill="
 const PenIcon    = () => (<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/></svg>);
 const LinkIcon   = () => (<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>);
 const ResetIcon  = () => (<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>);
+const ExitFsIcon = () => (<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M8 3v4a1 1 0 0 1-1 1H3M21 8h-4a1 1 0 0 1-1-1V3M3 16h4a1 1 0 0 1 1 1v4M16 21v-4a1 1 0 0 1 1-1h4"/></svg>);
 
 /* =============================================================
    Estilos
@@ -1029,20 +1110,6 @@ const lienzoWrapStyle = {
   display: 'flex', justifyContent: 'center', alignItems: 'center',
   boxShadow: 'var(--sn-shadow-md)',
   overflow: 'hidden',
-};
-
-const fsCloseBtnStyle = {
-  position: 'absolute', top: 20, right: 20, zIndex: 9999,
-  width: 48, height: 48, borderRadius: '50%',
-  background: 'var(--sn-crit)', color: 'white',
-  border: 'none', cursor: 'pointer',
-  fontSize: 22, fontWeight: 900,
-  display: 'flex', alignItems: 'center', justifyContent: 'center',
-  boxShadow: 'var(--sn-shadow-md)',
-};
-const fsToolsStyle = {
-  position: 'absolute', top: 20, left: 20, zIndex: 9999,
-  display: 'flex', flexDirection: 'column', gap: 8,
 };
 
 const tacticaRowStyle = {
